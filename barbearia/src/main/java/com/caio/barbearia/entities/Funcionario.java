@@ -1,13 +1,9 @@
 package com.caio.barbearia.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,22 +17,13 @@ public class Funcionario extends Pessoa{
     private BigDecimal salario;
 
     @Column(nullable = false)
-    private LocalTime horaEntrada;
-
-    @Column(nullable = false)
-    private LocalTime horaSaida;
-
-    @Column(nullable = false)
-    private LocalTime horaAlmocoInicio;
-
-    @Column(nullable = false)
-    private LocalTime horaAlmocoFim;
-
-    @Column(nullable = false)
     private LocalDate dataContratacao;
 
-    @OneToMany(mappedBy = "funcionario")
-    private List<AgendamentoProcedimento> procedimentos = new ArrayList<>();
+    @OneToOne(mappedBy = "jornada_trabalho")
+    private JornadaTrabalho jornadaTrabalho;
+
+    @OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL)
+    private List<AgendamentoProcedimento> agendamentoProcedimentos;
 
     public Funcionario(){}
 
@@ -56,38 +43,6 @@ public class Funcionario extends Pessoa{
         this.salario = salario;
     }
 
-    public LocalTime getHoraEntrada() {
-        return horaEntrada;
-    }
-
-    public void setHoraEntrada(LocalTime horaEntrada) {
-        this.horaEntrada = horaEntrada;
-    }
-
-    public LocalTime getHoraSaida() {
-        return horaSaida;
-    }
-
-    public void setHoraSaida(LocalTime horaSaida) {
-        this.horaSaida = horaSaida;
-    }
-
-    public LocalTime getHoraAlmocoInicio() {
-        return horaAlmocoInicio;
-    }
-
-    public void setHoraAlmocoInicio(LocalTime horaAlmocoInicio) {
-        this.horaAlmocoInicio = horaAlmocoInicio;
-    }
-
-    public LocalTime getHoraAlmocoFim() {
-        return horaAlmocoFim;
-    }
-
-    public void setHoraAlmocoFim(LocalTime horaAlmocoFim) {
-        this.horaAlmocoFim = horaAlmocoFim;
-    }
-
     public LocalDate getDataContratacao() {
         return dataContratacao;
     }
@@ -96,12 +51,20 @@ public class Funcionario extends Pessoa{
         this.dataContratacao = dataContratacao;
     }
 
-    public List<AgendamentoProcedimento> getProcedimentos() {
-        return procedimentos;
+    public JornadaTrabalho getJornadaTrabalho() {
+        return jornadaTrabalho;
     }
 
-    public void setProcedimentos(List<AgendamentoProcedimento> procedimentos) {
-        this.procedimentos = procedimentos;
+    public void setJornadaTrabalho(JornadaTrabalho jornadaTrabalho) {
+        this.jornadaTrabalho = jornadaTrabalho;
+    }
+
+    public List<AgendamentoProcedimento> getAgendamentoProcedimentos() {
+        return agendamentoProcedimentos;
+    }
+
+    public void setAgendamentoProcedimentos(List<AgendamentoProcedimento> agendamentoProcedimentos) {
+        this.agendamentoProcedimentos = agendamentoProcedimentos;
     }
 
     @Override
@@ -110,11 +73,11 @@ public class Funcionario extends Pessoa{
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Funcionario that = (Funcionario) o;
-        return Objects.equals(cargo, that.cargo) && Objects.equals(salario, that.salario) && Objects.equals(horaEntrada, that.horaEntrada) && Objects.equals(horaSaida, that.horaSaida) && Objects.equals(horaAlmocoInicio, that.horaAlmocoInicio) && Objects.equals(horaAlmocoFim, that.horaAlmocoFim) && Objects.equals(dataContratacao, that.dataContratacao) && Objects.equals(procedimentos, that.procedimentos);
+        return Objects.equals(cargo, that.cargo) && Objects.equals(salario, that.salario) && Objects.equals(dataContratacao, that.dataContratacao) && Objects.equals(jornadaTrabalho, that.jornadaTrabalho) && Objects.equals(agendamentoProcedimentos, that.agendamentoProcedimentos);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), cargo, salario, horaEntrada, horaSaida, horaAlmocoInicio, horaAlmocoFim, dataContratacao, procedimentos);
+        return Objects.hash(super.hashCode(), cargo, salario, dataContratacao, jornadaTrabalho, agendamentoProcedimentos);
     }
 }

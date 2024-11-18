@@ -1,6 +1,8 @@
 package com.caio.barbearia.entities;
 
 import java.io.Serializable;
+import java.time.LocalTime;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,6 +26,9 @@ public class Procedimento implements Serializable{
     @Column(nullable = false)
     private Double preco;
 
+    @Column
+    private LocalTime duracao;
+
     public Procedimento(){}
 
     public Long getId() {
@@ -46,40 +51,28 @@ public class Procedimento implements Serializable{
         this.preco = preco;
     }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-        result = prime * result + ((preco == null) ? 0 : preco.hashCode());
-        return result;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public LocalTime getDuracao() {
+        return duracao;
+    }
+
+    public void setDuracao(LocalTime duracao) {
+        this.duracao = duracao;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Procedimento other = (Procedimento) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        if (nome == null) {
-            if (other.nome != null)
-                return false;
-        } else if (!nome.equals(other.nome))
-            return false;
-        if (preco == null) {
-            if (other.preco != null)
-                return false;
-        } else if (!preco.equals(other.preco))
-            return false;
-        return true;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Procedimento that = (Procedimento) o;
+        return Objects.equals(id, that.id) && Objects.equals(nome, that.nome) && Objects.equals(preco, that.preco) && Objects.equals(duracao, that.duracao);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nome, preco, duracao);
     }
 }

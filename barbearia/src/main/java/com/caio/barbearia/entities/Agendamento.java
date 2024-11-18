@@ -3,8 +3,6 @@ package com.caio.barbearia.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,26 +15,27 @@ public class Agendamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne // Muitos agendamentos podem ser feitos por um cliente
-    @JoinColumn(name = "cliente_id", nullable = false) // Define a chave estrangeira para Cliente
+    @ManyToOne
+    @JoinColumn(name = "id_cliente", nullable = false)
     private Cliente cliente;
-
-    @OneToMany(mappedBy = "agendamento") //mappedBy usado pois e uma relacão bidirecional
-    private List<AgendamentoProcedimento> procedimentos = new ArrayList<>();
 
     @Column(nullable = false)
     private LocalDateTime dataHoraInicio;
 
     @Column(nullable = false)
-    private LocalDateTime dataHoraFim;
-
-    @Column(nullable = false)
     private String status;
+
+    @OneToMany(mappedBy = "agendamento", cascade = CascadeType.ALL)
+    private List<AgendamentoProcedimento> agendamentoProcedimentos;
 
     public Agendamento() {}
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Cliente getCliente() {
@@ -47,28 +46,12 @@ public class Agendamento {
         this.cliente = cliente;
     }
 
-    public List<AgendamentoProcedimento> getProcedimentos() {
-        return procedimentos;
-    }
-
-    public void setProcedimentos(List<AgendamentoProcedimento> procedimentos) {
-        this.procedimentos = procedimentos;
-    }
-
     public LocalDateTime getDataHoraInicio() {
         return dataHoraInicio;
     }
 
     public void setDataHoraInicio(LocalDateTime dataHoraInicio) {
         this.dataHoraInicio = dataHoraInicio;
-    }
-
-    public LocalDateTime getDataHoraFim() {
-        return dataHoraFim;
-    }
-
-    public void setDataHoraFim(LocalDateTime dataHoraFim) {
-        this.dataHoraFim = dataHoraFim;
     }
 
     public String getStatus() {
@@ -79,16 +62,24 @@ public class Agendamento {
         this.status = status;
     }
 
+    public List<AgendamentoProcedimento> getAgendamentoProcedimentos() {
+        return agendamentoProcedimentos;
+    }
+
+    public void setAgendamentoProcedimentos(List<AgendamentoProcedimento> agendamentoProcedimentos) {
+        this.agendamentoProcedimentos = agendamentoProcedimentos;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Agendamento that = (Agendamento) o;
-        return Objects.equals(id, that.id) && Objects.equals(cliente, that.cliente) && Objects.equals(procedimentos, that.procedimentos) && Objects.equals(dataHoraInicio, that.dataHoraInicio) && Objects.equals(dataHoraFim, that.dataHoraFim) && Objects.equals(status, that.status);
+        return Objects.equals(id, that.id) && Objects.equals(cliente, that.cliente) && Objects.equals(dataHoraInicio, that.dataHoraInicio) && Objects.equals(status, that.status) && Objects.equals(agendamentoProcedimentos, that.agendamentoProcedimentos);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, cliente, procedimentos, dataHoraInicio, dataHoraFim, status);
+        return Objects.hash(id, cliente, dataHoraInicio, status, agendamentoProcedimentos);
     }
 }
