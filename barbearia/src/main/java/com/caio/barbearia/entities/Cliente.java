@@ -11,8 +11,7 @@ public class Cliente extends Pessoa{
     @Column(nullable = false, length = 30)
     private String telefone;
 
-    public Cliente() {
-    }
+    public Cliente() {}
 
     public String getTelefone() {
         return telefone;

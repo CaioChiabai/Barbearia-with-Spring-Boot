@@ -22,8 +22,9 @@ public class Agendamento {
     @Column(nullable = false)
     private LocalDateTime dataHoraInicio;
 
-    @Column(nullable = false)
-    private String status;
+    @ManyToOne
+    @JoinColumn(name = "status_id", nullable = false)
+    private Status status;
 
     @OneToMany(mappedBy = "agendamento", cascade = CascadeType.ALL)
     private List<AgendamentoProcedimento> agendamentoProcedimentos;
@@ -54,11 +55,11 @@ public class Agendamento {
         this.dataHoraInicio = dataHoraInicio;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

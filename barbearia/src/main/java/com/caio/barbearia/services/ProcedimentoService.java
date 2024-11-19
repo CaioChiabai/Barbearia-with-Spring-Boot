@@ -42,6 +42,7 @@ public class ProcedimentoService {
 
         entity.setNome(procedimento.getNome());
         entity.setPreco(procedimento.getPreco());
+        entity.setDuracao(procedimento.getDuracao());
         return repository.save(entity);
     }
 

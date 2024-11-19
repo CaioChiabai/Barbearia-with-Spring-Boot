@@ -11,7 +11,7 @@ import com.caio.barbearia.entities.Procedimento;
 import com.caio.barbearia.services.ProcedimentoService;
 
 @RestController
-@RequestMapping("/procedimento")
+@RequestMapping(value = "/procedimento")
 public class ProcedimentoController {
 
     @Autowired
@@ -24,7 +24,6 @@ public class ProcedimentoController {
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Procedimento findById(@PathVariable(value = "id") Long id){
-
         return service.findById(id);
     }
 

@@ -30,6 +30,8 @@ public class JornadaTrabalho {
     @Column(nullable = false)
     private LocalTime fimIntervalo;
 
+    public JornadaTrabalho(){}
+
     public Long getId() {
         return id;
     }

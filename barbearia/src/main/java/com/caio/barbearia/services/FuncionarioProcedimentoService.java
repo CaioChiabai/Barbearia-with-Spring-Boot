@@ -1,7 +1,9 @@
 package com.caio.barbearia.services;
 
 import com.caio.barbearia.entities.Funcionario;
+import com.caio.barbearia.entities.FuncionarioProcedimento;
 import com.caio.barbearia.exceptions.ResourceNotFoundException;
+import com.caio.barbearia.repositories.FuncionarioProcedimentoRepository;
 import com.caio.barbearia.repositories.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,50 +12,44 @@ import java.util.List;
 import java.util.logging.Logger;
 
 @Service
-public class FuncionarioService {
+public class FuncionarioProcedimentoService {
 
-    private Logger logger = Logger.getLogger(FuncionarioService.class.getName());
+    private Logger logger = Logger.getLogger(FuncionarioProcedimentoService.class.getName());
 
     @Autowired
-    FuncionarioRepository repository;
+    FuncionarioProcedimentoRepository repository;
 
-    public List<Funcionario> findAll(){
+    public List<FuncionarioProcedimento> findAll(){
         logger.info("Procurando todos os funcionarios!");
         return repository.findAll();
     }
 
-    public Funcionario findById(Long id){
+    public FuncionarioProcedimento findById(Long id){
         logger.info("Procurando um funcionario!");
         return repository.findById(id).
                 orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
     }
 
-    public Funcionario create(Funcionario funcionario){
+    public FuncionarioProcedimento create(FuncionarioProcedimento funcionarioProcedimento){
         logger.info("Criando um funcionario!");
-        return repository.save(funcionario);
+        return repository.save(funcionarioProcedimento);
     }
 
-    public Funcionario update(Funcionario funcionario){
+    public FuncionarioProcedimento update(FuncionarioProcedimento funcionarioProcedimento){
         logger.info("Atualizando um funcionario!");
 
-        Funcionario entity = repository.findById(funcionario.getId())
+        FuncionarioProcedimento entity = repository.findById(funcionarioProcedimento.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Não foi encontrado esse ID!"));
 
-        entity.setNome(funcionario.getNome());
-        entity.setSenha( funcionario.getSenha());
-        entity.setEmail(funcionario.getEmail());
-        entity.setCpf(funcionario.getCpf());
-        entity.setCargo(funcionario.getCargo());;
-        entity.setSalario(funcionario.getSalario());
-        entity.setDataContratacao(funcionario.getDataContratacao());
-        entity.setAgendamentoProcedimentos(funcionario.getAgendamentoProcedimentos());
+        entity.setFuncionario(funcionarioProcedimento.getFuncionario());
+        entity.setProcedimento(funcionarioProcedimento.getProcedimento());
         return repository.save(entity);
     }
 
     public void delete(Long id){
         logger.info("Deletando um funcionario!");
 
-        Funcionario entity = repository.findById(id)
+        FuncionarioProcedimento entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Não foi encontrado esse ID!"));
 
         repository.delete(entity);

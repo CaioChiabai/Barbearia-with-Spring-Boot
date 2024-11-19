@@ -19,7 +19,7 @@ public class Funcionario extends Pessoa{
     @Column(nullable = false)
     private LocalDate dataContratacao;
 
-    @OneToOne(mappedBy = "jornada_trabalho")
+    @OneToOne(mappedBy = "funcionario")
     private JornadaTrabalho jornadaTrabalho;
 
     @OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL)

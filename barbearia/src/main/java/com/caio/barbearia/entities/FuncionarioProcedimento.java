@@ -21,6 +21,8 @@ public class FuncionarioProcedimento {
     @JoinColumn(name = "procedimento_id", nullable = false)
     private Procedimento procedimento;
 
+    public FuncionarioProcedimento(){}
+
     public Long getId() {
         return id;
     }

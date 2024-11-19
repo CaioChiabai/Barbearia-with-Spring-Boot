@@ -26,6 +26,8 @@ public class AgendamentoProcedimento {
     @Column(nullable = false)
     private Integer quantidade;
 
+    public AgendamentoProcedimento(){}
+
     public Long getId() {
         return id;
     }

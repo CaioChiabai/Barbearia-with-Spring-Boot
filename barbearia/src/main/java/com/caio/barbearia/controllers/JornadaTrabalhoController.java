@@ -1,43 +1,46 @@
 package com.caio.barbearia.controllers;
 
-import com.caio.barbearia.entities.Funcionario;
-import com.caio.barbearia.services.FuncionarioService;
+import java.util.List;
+
+import com.caio.barbearia.entities.JornadaTrabalho;
+import com.caio.barbearia.services.JornadaTrabalhoService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PutMapping;
 
-import java.util.List;
 
 @RestController
-@RequestMapping(value = "/funcionario")
-public class FuncionarioController {
+@RequestMapping(value = "/jornada_trabalho")
+public class JornadaTrabalhoController {
 
     @Autowired
-    private FuncionarioService service;
+    private JornadaTrabalhoService service;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Funcionario> findAll(){
+    public List<JornadaTrabalho> findAll(){
         return service.findAll();
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Funcionario findById(@PathVariable(value = "id") Long id){
+    public JornadaTrabalho findById(@PathVariable(value = "id") Long id){
 
         return service.findById(id);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public Funcionario create(@RequestBody Funcionario funcionario){
-        return service.create(funcionario);
+    public JornadaTrabalho create(@RequestBody JornadaTrabalho jornadaTrabalho){
+        return service.create(jornadaTrabalho);
     }
 
     @PutMapping(value = "/{id}",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public Funcionario update(@RequestBody Funcionario funcionario){
-        return service.update(funcionario);
+    public JornadaTrabalho update(@RequestBody JornadaTrabalho jornadaTrabalho){
+        return service.update(jornadaTrabalho);
     }
 
     @DeleteMapping(value = "/{id}")
