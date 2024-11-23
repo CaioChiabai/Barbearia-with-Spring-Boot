@@ -3,6 +3,7 @@ package com.caio.barbearia.controllers;
 import com.caio.barbearia.entities.Cliente;
 import com.caio.barbearia.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +30,13 @@ public class ClienteController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public Cliente create(@RequestBody Cliente cliente){
-        return service.create(cliente);
+    public ResponseEntity<Cliente> create(@RequestBody Cliente cliente){
+         try {
+            Cliente novoCliente = service.create(cliente);
+            return ResponseEntity.status(HttpStatus.CREATED).body(novoCliente);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
 
     @PutMapping(value = "/{id}",

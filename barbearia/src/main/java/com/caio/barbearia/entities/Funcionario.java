@@ -22,7 +22,7 @@ public class Funcionario extends Pessoa{
     @OneToOne(mappedBy = "funcionario")
     private JornadaTrabalho jornadaTrabalho;
 
-    @OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "funcionarioProcedimento.funcionario", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private List<AgendamentoProcedimento> agendamentoProcedimentos;
 
     public Funcionario(){}

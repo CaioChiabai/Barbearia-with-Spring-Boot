@@ -40,8 +40,7 @@ public class AgendamentoProcedimentoService {
                 .orElseThrow(() -> new ResourceNotFoundException("Não foi encontrado esse ID!"));
 
         entity.setAgendamento(agendamentoProcedimento.getAgendamento());
-        entity.setProcedimento(agendamentoProcedimento.getProcedimento());
-        entity.setProcedimento(agendamentoProcedimento.getProcedimento());
+        entity.setFuncionarioProcedimento(agendamentoProcedimento.getFuncionarioProcedimento());
         entity.setQuantidade(agendamentoProcedimento.getQuantidade());
         return repository.save(entity);
     }

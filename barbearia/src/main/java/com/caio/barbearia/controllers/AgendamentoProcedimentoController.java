@@ -24,12 +24,11 @@ public class AgendamentoProcedimentoController {
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public AgendamentoProcedimento findById(@PathVariable(value = "id") Long id){
-
         return service.findById(id);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+                produces = MediaType.APPLICATION_JSON_VALUE)
     public AgendamentoProcedimento create(@RequestBody AgendamentoProcedimento agendamentoProcedimento){
         return service.create(agendamentoProcedimento);
     }

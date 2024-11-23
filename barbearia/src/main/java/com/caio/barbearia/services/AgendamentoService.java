@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.caio.barbearia.entities.Agendamento;
+import com.caio.barbearia.entities.Status;
 import com.caio.barbearia.exceptions.ResourceNotFoundException;
 import com.caio.barbearia.repositories.AgendamentoRepository;
+import com.caio.barbearia.repositories.StatusRepository;
 
 @Service
 public class AgendamentoService {
@@ -17,6 +19,9 @@ public class AgendamentoService {
 
     @Autowired
     AgendamentoRepository repository;
+
+    @Autowired
+    private StatusRepository statusRepository;
 
     public List<Agendamento> findAll(){
         logger.info("Procurando todos os agendamentos!");
@@ -31,6 +36,10 @@ public class AgendamentoService {
 
     public Agendamento create(Agendamento agendamento){
         logger.info("Criando um agendamento!");
+        Status statusEmAberto = statusRepository.findByDescricao("Em aberto")
+                .orElseThrow(() -> new IllegalArgumentException("Status 'Em aberto' não encontrado"));
+
+        agendamento.setStatus(statusEmAberto);
         return repository.save(agendamento);
     }
 

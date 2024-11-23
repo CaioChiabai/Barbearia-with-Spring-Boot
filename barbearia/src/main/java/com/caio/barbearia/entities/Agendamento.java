@@ -23,11 +23,8 @@ public class Agendamento {
     private LocalDateTime dataHoraInicio;
 
     @ManyToOne
-    @JoinColumn(name = "status_id", nullable = false)
+    @JoinColumn(name = "id_status", nullable = false)
     private Status status;
-
-    @OneToMany(mappedBy = "agendamento", cascade = CascadeType.ALL)
-    private List<AgendamentoProcedimento> agendamentoProcedimentos;
 
     public Agendamento() {}
 

@@ -20,10 +20,10 @@ public abstract class Pessoa implements Serializable {
     @Column(nullable = false, length = 30)
     private String senha;
 
-    @Column(nullable = false, length = 20)
+    @Column(unique = true, nullable = false, length = 20)
     private String cpf;
 
-    @Column(nullable = false, length = 100)
+    @Column(unique = true, nullable = false, length = 100)
     private String email;
 
     public Pessoa() {}

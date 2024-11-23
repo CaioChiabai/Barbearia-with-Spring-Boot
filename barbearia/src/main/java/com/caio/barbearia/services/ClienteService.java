@@ -30,6 +30,16 @@ public class ClienteService {
 
     public Cliente create(Cliente cliente){
         logger.info("Criando um cliente!");
+
+        // Verifica se já existe um cliente com o email
+        repository.findByEmail(cliente.getEmail()).ifPresent(existingCliente -> {
+            throw new IllegalArgumentException("Já existe um cliente com o email: " + cliente.getEmail());
+        });
+
+        repository.findByCpf(cliente.getCpf()).ifPresent(existingCliente -> {
+            throw new IllegalArgumentException("Já existe um cliente com o cpf: " + cliente.getEmail());
+        });
+
         return repository.save(cliente);
     }
 

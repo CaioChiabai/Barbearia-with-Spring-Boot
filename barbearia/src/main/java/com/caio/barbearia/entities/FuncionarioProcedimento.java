@@ -2,6 +2,7 @@ package com.caio.barbearia.entities;
 
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -14,11 +15,11 @@ public class FuncionarioProcedimento {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "funcionario_id", nullable = false)
+    @JoinColumn(name = "id_funcionario", nullable = false)
     private Funcionario funcionario;
 
     @ManyToOne
-    @JoinColumn(name = "procedimento_id", nullable = false)
+    @JoinColumn(name = "id_procedimento", nullable = false)
     private Procedimento procedimento;
 
     public FuncionarioProcedimento(){}

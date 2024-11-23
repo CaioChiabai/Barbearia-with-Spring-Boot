@@ -2,8 +2,6 @@ package com.caio.barbearia.entities;
 
 import jakarta.persistence.*;
 
-import java.util.Objects;
-
 @Entity
 public class AgendamentoProcedimento {
 
@@ -11,17 +9,13 @@ public class AgendamentoProcedimento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "id_agendamento", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_funcionario_procedimento", nullable = false)
     private Agendamento agendamento;
 
-    @ManyToOne
-    @JoinColumn(name = "id_procedimento", nullable = false)
-    private Procedimento procedimento;
-
-    @ManyToOne
-    @JoinColumn(name = "id_funcionario")
-    private Funcionario funcionario;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_funcionario_procedimento", nullable = false)
+    private FuncionarioProcedimento funcionarioProcedimento;
 
     @Column(nullable = false)
     private Integer quantidade;
@@ -44,20 +38,12 @@ public class AgendamentoProcedimento {
         this.agendamento = agendamento;
     }
 
-    public Procedimento getProcedimento() {
-        return procedimento;
+    public FuncionarioProcedimento getFuncionarioProcedimento() {
+        return funcionarioProcedimento;
     }
 
-    public void setProcedimento(Procedimento procedimento) {
-        this.procedimento = procedimento;
-    }
-
-    public Funcionario getFuncionario() {
-        return funcionario;
-    }
-
-    public void setFuncionario(Funcionario funcionario) {
-        this.funcionario = funcionario;
+    public void setFuncionarioProcedimento(FuncionarioProcedimento funcionarioProcedimento) {
+        this.funcionarioProcedimento = funcionarioProcedimento;
     }
 
     public Integer getQuantidade() {
@@ -69,15 +55,47 @@ public class AgendamentoProcedimento {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AgendamentoProcedimento that = (AgendamentoProcedimento) o;
-        return Objects.equals(id, that.id) && Objects.equals(agendamento, that.agendamento) && Objects.equals(procedimento, that.procedimento) && Objects.equals(funcionario, that.funcionario) && Objects.equals(quantidade, that.quantidade);
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((agendamento == null) ? 0 : agendamento.hashCode());
+        result = prime * result + ((funcionarioProcedimento == null) ? 0 : funcionarioProcedimento.hashCode());
+        result = prime * result + ((quantidade == null) ? 0 : quantidade.hashCode());
+        return result;
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id, agendamento, procedimento, funcionario, quantidade);
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        AgendamentoProcedimento other = (AgendamentoProcedimento) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        if (agendamento == null) {
+            if (other.agendamento != null)
+                return false;
+        } else if (!agendamento.equals(other.agendamento))
+            return false;
+        if (funcionarioProcedimento == null) {
+            if (other.funcionarioProcedimento != null)
+                return false;
+        } else if (!funcionarioProcedimento.equals(other.funcionarioProcedimento))
+            return false;
+        if (quantidade == null) {
+            if (other.quantidade != null)
+                return false;
+        } else if (!quantidade.equals(other.quantidade))
+            return false;
+        return true;
     }
+
+   
 }
