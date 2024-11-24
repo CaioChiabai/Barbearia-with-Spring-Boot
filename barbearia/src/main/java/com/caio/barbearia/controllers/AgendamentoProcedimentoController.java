@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping(value = "/agendamento_procedimento")
 public class AgendamentoProcedimentoController {

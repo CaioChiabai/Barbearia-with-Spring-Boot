@@ -10,7 +10,7 @@ public class AgendamentoProcedimento {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_funcionario_procedimento", nullable = false)
+    @JoinColumn(name = "id_agendamento", nullable = false)
     private Agendamento agendamento;
 
     @ManyToOne(fetch = FetchType.LAZY)

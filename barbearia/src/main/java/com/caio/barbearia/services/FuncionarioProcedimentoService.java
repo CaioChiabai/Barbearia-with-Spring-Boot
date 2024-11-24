@@ -1,10 +1,8 @@
 package com.caio.barbearia.services;
 
-import com.caio.barbearia.entities.Funcionario;
 import com.caio.barbearia.entities.FuncionarioProcedimento;
 import com.caio.barbearia.exceptions.ResourceNotFoundException;
 import com.caio.barbearia.repositories.FuncionarioProcedimentoRepository;
-import com.caio.barbearia.repositories.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

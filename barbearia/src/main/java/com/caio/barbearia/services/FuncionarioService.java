@@ -3,6 +3,7 @@ package com.caio.barbearia.services;
 import com.caio.barbearia.entities.Funcionario;
 import com.caio.barbearia.exceptions.ResourceNotFoundException;
 import com.caio.barbearia.repositories.FuncionarioRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +25,9 @@ public class FuncionarioService {
 
     public Funcionario findById(Long id){
         logger.info("Procurando um funcionario!");
+
         return repository.findById(id).
-                orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+        orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
     }
 
     public Funcionario create(Funcionario funcionario){
@@ -46,7 +48,6 @@ public class FuncionarioService {
         entity.setCargo(funcionario.getCargo());;
         entity.setSalario(funcionario.getSalario());
         entity.setDataContratacao(funcionario.getDataContratacao());
-        entity.setAgendamentoProcedimentos(funcionario.getAgendamentoProcedimentos());
         return repository.save(entity);
     }
 

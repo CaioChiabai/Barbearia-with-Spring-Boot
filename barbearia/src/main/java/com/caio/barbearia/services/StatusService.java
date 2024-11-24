@@ -6,10 +6,8 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.caio.barbearia.entities.Cliente;
 import com.caio.barbearia.entities.Status;
 import com.caio.barbearia.exceptions.ResourceNotFoundException;
-import com.caio.barbearia.repositories.ClienteRepository;
 import com.caio.barbearia.repositories.StatusRepository;
 
 @Service

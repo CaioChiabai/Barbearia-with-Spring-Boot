@@ -49,7 +49,6 @@ public class AgendamentoService {
         Agendamento entity = repository.findById(agendamento.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Não foi encontrado esse ID!"));
 
-        entity.setAgendamentoProcedimentos(agendamento.getAgendamentoProcedimentos());
         entity.setCliente(agendamento.getCliente());
         entity.setDataHoraInicio(agendamento.getDataHoraInicio());
         entity.setStatus(agendamento.getStatus());

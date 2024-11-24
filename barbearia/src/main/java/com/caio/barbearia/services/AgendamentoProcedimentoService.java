@@ -1,5 +1,6 @@
 package com.caio.barbearia.services;
 
+import com.caio.barbearia.dto.AgendamentoProcedimentoDTO;
 import com.caio.barbearia.entities.AgendamentoProcedimento;
 import com.caio.barbearia.exceptions.ResourceNotFoundException;
 import com.caio.barbearia.repositories.AgendamentoProcedimentoRepository;
@@ -52,5 +53,9 @@ public class AgendamentoProcedimentoService {
                 .orElseThrow(() -> new ResourceNotFoundException("Não foi encontrado esse ID!"));
 
         repository.delete(entity);
+    }
+
+    public List<AgendamentoProcedimentoDTO> findAllByFuncionario(Long idFuncionario){
+        return repository.findAllByFuncionarioId(idFuncionario);
     }
 }

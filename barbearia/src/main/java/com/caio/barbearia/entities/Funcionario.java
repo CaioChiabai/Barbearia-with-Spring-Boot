@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Objects;
 
 @Entity
 public class Funcionario extends Pessoa{
@@ -21,9 +19,6 @@ public class Funcionario extends Pessoa{
 
     @OneToOne(mappedBy = "funcionario")
     private JornadaTrabalho jornadaTrabalho;
-
-    @OneToMany(mappedBy = "funcionarioProcedimento.funcionario", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    private List<AgendamentoProcedimento> agendamentoProcedimentos;
 
     public Funcionario(){}
 
@@ -59,25 +54,47 @@ public class Funcionario extends Pessoa{
         this.jornadaTrabalho = jornadaTrabalho;
     }
 
-    public List<AgendamentoProcedimento> getAgendamentoProcedimentos() {
-        return agendamentoProcedimentos;
-    }
-
-    public void setAgendamentoProcedimentos(List<AgendamentoProcedimento> agendamentoProcedimentos) {
-        this.agendamentoProcedimentos = agendamentoProcedimentos;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        Funcionario that = (Funcionario) o;
-        return Objects.equals(cargo, that.cargo) && Objects.equals(salario, that.salario) && Objects.equals(dataContratacao, that.dataContratacao) && Objects.equals(jornadaTrabalho, that.jornadaTrabalho) && Objects.equals(agendamentoProcedimentos, that.agendamentoProcedimentos);
-    }
-
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), cargo, salario, dataContratacao, jornadaTrabalho, agendamentoProcedimentos);
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + ((cargo == null) ? 0 : cargo.hashCode());
+        result = prime * result + ((salario == null) ? 0 : salario.hashCode());
+        result = prime * result + ((dataContratacao == null) ? 0 : dataContratacao.hashCode());
+        result = prime * result + ((jornadaTrabalho == null) ? 0 : jornadaTrabalho.hashCode());
+        return result;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!super.equals(obj))
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Funcionario other = (Funcionario) obj;
+        if (cargo == null) {
+            if (other.cargo != null)
+                return false;
+        } else if (!cargo.equals(other.cargo))
+            return false;
+        if (salario == null) {
+            if (other.salario != null)
+                return false;
+        } else if (!salario.equals(other.salario))
+            return false;
+        if (dataContratacao == null) {
+            if (other.dataContratacao != null)
+                return false;
+        } else if (!dataContratacao.equals(other.dataContratacao))
+            return false;
+        if (jornadaTrabalho == null) {
+            if (other.jornadaTrabalho != null)
+                return false;
+        } else if (!jornadaTrabalho.equals(other.jornadaTrabalho))
+            return false;
+        return true;
+    }
+
 }

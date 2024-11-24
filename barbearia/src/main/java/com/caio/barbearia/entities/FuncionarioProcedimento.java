@@ -2,7 +2,6 @@ package com.caio.barbearia.entities;
 
 import jakarta.persistence.*;
 
-import java.util.List;
 import java.util.Objects;
 
 @Entity
