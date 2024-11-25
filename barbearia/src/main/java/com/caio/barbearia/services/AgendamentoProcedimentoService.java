@@ -55,7 +55,12 @@ public class AgendamentoProcedimentoService {
         repository.delete(entity);
     }
 
-    public List<AgendamentoProcedimentoDTO> findAllByFuncionario(Long idFuncionario){
-        return repository.findAllByFuncionarioId(idFuncionario);
+    public List<AgendamentoProcedimentoDTO> findByFuncionarioId(Long idFuncionario){
+        return repository.findByFuncionarioId(idFuncionario);
     }
+    
+    public List<AgendamentoProcedimentoDTO> findByClienteId(Long idCliente){
+        return repository.findByClienteId(idCliente);
+    }
+    
 }

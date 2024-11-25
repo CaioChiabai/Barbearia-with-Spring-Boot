@@ -7,11 +7,13 @@ public class AgendamentoProcedimentoDTO {
     private Long idAgendamento;
     private LocalDateTime dataAgendamento;
     private String nomeProcedimento;
+    //private String status;
 
     public AgendamentoProcedimentoDTO(Long idAgendamento, LocalDateTime dataAgendamento, String nomeProcedimento) {
         this.idAgendamento = idAgendamento;
         this.dataAgendamento = dataAgendamento;
         this.nomeProcedimento = nomeProcedimento;
+        //this.status = status;
     }
 
     public Long getIdAgendamento() {
@@ -37,4 +39,13 @@ public class AgendamentoProcedimentoDTO {
     public void setDataAgendamento(LocalDateTime dataAgendamento) {
         this.dataAgendamento = dataAgendamento;
     }
+    /* 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    */
 }

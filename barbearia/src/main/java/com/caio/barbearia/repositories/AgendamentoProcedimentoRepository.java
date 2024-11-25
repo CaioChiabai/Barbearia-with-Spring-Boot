@@ -18,5 +18,15 @@ public interface AgendamentoProcedimentoRepository extends JpaRepository<Agendam
            "FROM AgendamentoProcedimento ap " +
            "JOIN ap.funcionarioProcedimento fp " +
            "WHERE fp.funcionario.id = :idFuncionario")
-    List<AgendamentoProcedimentoDTO> findAllByFuncionarioId(@Param("idFuncionario") Long idFuncionario);
+    List<AgendamentoProcedimentoDTO> findByFuncionarioId(@Param("idFuncionario") Long idFuncionario);
+
+    
+    @Query("SELECT new com.caio.barbearia.dto.AgendamentoProcedimentoDTO( " +
+           "ap.agendamento.id, ap.agendamento.dataHoraInicio, fp.procedimento.nome) " +
+           "FROM AgendamentoProcedimento ap " +
+           "JOIN ap.agendamento a " +
+           "JOIN ap.funcionarioProcedimento fp " +
+           "WHERE a.cliente.id = :idCliente")
+    List<AgendamentoProcedimentoDTO> findByClienteId(@Param("idCliente") Long idCliente);
+     
 }

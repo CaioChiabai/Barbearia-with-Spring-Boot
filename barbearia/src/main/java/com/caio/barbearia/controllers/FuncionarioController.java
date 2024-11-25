@@ -52,9 +52,9 @@ public class FuncionarioController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping(value = "/{id}/agendamentos-procedimentos")
+    @GetMapping(value = "/{id}/agendamento")
     public ResponseEntity<List<AgendamentoProcedimentoDTO>> listarAgendamentosProcedimentos(@PathVariable Long id) {
-        List<AgendamentoProcedimentoDTO> agendamentos = agendamentoProcedimentoService.findAllByFuncionario(id);
+        List<AgendamentoProcedimentoDTO> agendamentos = agendamentoProcedimentoService.findByFuncionarioId(id);
         return ResponseEntity.ok(agendamentos);
     }
     
