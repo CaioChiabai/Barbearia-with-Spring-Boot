@@ -2,18 +2,20 @@ package com.caio.barbearia.dto;
 
 import java.time.LocalDateTime;
 
+import com.caio.barbearia.entities.Status;
+
 public class AgendamentoProcedimentoDTO {
 
     private Long idAgendamento;
     private LocalDateTime dataAgendamento;
     private String nomeProcedimento;
-    //private String status;
+    private String status;
 
-    public AgendamentoProcedimentoDTO(Long idAgendamento, LocalDateTime dataAgendamento, String nomeProcedimento) {
+    public AgendamentoProcedimentoDTO(Long idAgendamento, LocalDateTime dataAgendamento, String nomeProcedimento, String status) {
         this.idAgendamento = idAgendamento;
         this.dataAgendamento = dataAgendamento;
         this.nomeProcedimento = nomeProcedimento;
-        //this.status = status;
+        this.status = status;
     }
 
     public Long getIdAgendamento() {
@@ -39,7 +41,7 @@ public class AgendamentoProcedimentoDTO {
     public void setDataAgendamento(LocalDateTime dataAgendamento) {
         this.dataAgendamento = dataAgendamento;
     }
-    /* 
+     
     public String getStatus() {
         return status;
     }
@@ -47,5 +49,5 @@ public class AgendamentoProcedimentoDTO {
     public void setStatus(String status) {
         this.status = status;
     }
-    */
+    
 }

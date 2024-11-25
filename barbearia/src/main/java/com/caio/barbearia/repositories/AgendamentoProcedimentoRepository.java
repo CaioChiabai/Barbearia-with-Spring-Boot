@@ -14,15 +14,16 @@ import com.caio.barbearia.entities.AgendamentoProcedimento;
 public interface AgendamentoProcedimentoRepository extends JpaRepository<AgendamentoProcedimento, Long>{
 
     @Query("SELECT new com.caio.barbearia.dto.AgendamentoProcedimentoDTO( " +
-           "ap.agendamento.id, ap.agendamento.dataHoraInicio, fp.procedimento.nome) " +
+           "ap.agendamento.id, ap.agendamento.dataHoraInicio, fp.procedimento.nome,  a.status.descricao) " +
            "FROM AgendamentoProcedimento ap " +
            "JOIN ap.funcionarioProcedimento fp " +
+           "JOIN ap.agendamento a " +
            "WHERE fp.funcionario.id = :idFuncionario")
     List<AgendamentoProcedimentoDTO> findByFuncionarioId(@Param("idFuncionario") Long idFuncionario);
 
     
     @Query("SELECT new com.caio.barbearia.dto.AgendamentoProcedimentoDTO( " +
-           "ap.agendamento.id, ap.agendamento.dataHoraInicio, fp.procedimento.nome) " +
+           "ap.agendamento.id, ap.agendamento.dataHoraInicio, fp.procedimento.nome, a.status.descricao) " +
            "FROM AgendamentoProcedimento ap " +
            "JOIN ap.agendamento a " +
            "JOIN ap.funcionarioProcedimento fp " +
