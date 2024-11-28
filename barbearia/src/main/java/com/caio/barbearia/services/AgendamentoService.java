@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.caio.barbearia.dto.AgendamentoDTO;
 import com.caio.barbearia.entities.Agendamento;
 import com.caio.barbearia.entities.Status;
 import com.caio.barbearia.exceptions.ResourceNotFoundException;
@@ -51,6 +52,7 @@ public class AgendamentoService {
 
         entity.setCliente(agendamento.getCliente());
         entity.setDataHoraInicio(agendamento.getDataHoraInicio());
+        entity.setFuncionarioProcedimento(agendamento.getFuncionarioProcedimento());
         entity.setStatus(agendamento.getStatus());
         return repository.save(entity);
     }
@@ -62,5 +64,13 @@ public class AgendamentoService {
                 .orElseThrow(() -> new ResourceNotFoundException("Não foi encontrado esse ID!"));
 
         repository.delete(entity);
+    }
+
+    public List<AgendamentoDTO> findByFuncionarioId(Long idFuncionario){
+        return repository.findByFuncionarioId(idFuncionario);
+    }
+    
+    public List<AgendamentoDTO> findByClienteId(Long idCliente){
+        return repository.findByClienteId(idCliente);
     }
 }

@@ -1,8 +1,8 @@
 package com.caio.barbearia.controllers;
 
-import com.caio.barbearia.dto.AgendamentoProcedimentoDTO;
+import com.caio.barbearia.dto.AgendamentoDTO;
 import com.caio.barbearia.entities.Cliente;
-import com.caio.barbearia.services.AgendamentoProcedimentoService;
+import com.caio.barbearia.services.AgendamentoService;
 import com.caio.barbearia.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,7 @@ public class ClienteController {
     private ClienteService service;
 
     @Autowired
-    private AgendamentoProcedimentoService agendamentoProcedimentoService;
+    private AgendamentoService agendamentoService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Cliente> findAll(){
@@ -58,8 +58,8 @@ public class ClienteController {
     }
     
     @GetMapping(value = "/{id}/agendamento")
-    public ResponseEntity<List<AgendamentoProcedimentoDTO>> listarAgendamentosProcedimentos(@PathVariable Long id) {
-        List<AgendamentoProcedimentoDTO> agendamentos = agendamentoProcedimentoService.findByClienteId(id);
+    public ResponseEntity<List<AgendamentoDTO>> listarAgendamentos(@PathVariable Long id) {
+        List<AgendamentoDTO> agendamentos = agendamentoService.findByClienteId(id);
         return ResponseEntity.ok(agendamentos);
     }
     

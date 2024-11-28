@@ -19,6 +19,10 @@ public class Agendamento {
     private LocalDateTime dataHoraInicio;
 
     @ManyToOne
+    @JoinColumn(name = "id_funcionario_procedimento", nullable = false)
+    private FuncionarioProcedimento funcionarioProcedimento;
+
+    @ManyToOne
     @JoinColumn(name = "id_status", nullable = false)
     private Status status;
 
@@ -56,6 +60,14 @@ public class Agendamento {
         this.status = status;
     }
 
+    public FuncionarioProcedimento getFuncionarioProcedimento() {
+        return funcionarioProcedimento;
+    }
+
+    public void setFuncionarioProcedimento(FuncionarioProcedimento funcionarioProcedimento) {
+        this.funcionarioProcedimento = funcionarioProcedimento;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -63,6 +75,7 @@ public class Agendamento {
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((cliente == null) ? 0 : cliente.hashCode());
         result = prime * result + ((dataHoraInicio == null) ? 0 : dataHoraInicio.hashCode());
+        result = prime * result + ((funcionarioProcedimento == null) ? 0 : funcionarioProcedimento.hashCode());
         result = prime * result + ((status == null) ? 0 : status.hashCode());
         return result;
     }
@@ -91,13 +104,16 @@ public class Agendamento {
                 return false;
         } else if (!dataHoraInicio.equals(other.dataHoraInicio))
             return false;
+        if (funcionarioProcedimento == null) {
+            if (other.funcionarioProcedimento != null)
+                return false;
+        } else if (!funcionarioProcedimento.equals(other.funcionarioProcedimento))
+            return false;
         if (status == null) {
             if (other.status != null)
                 return false;
         } else if (!status.equals(other.status))
             return false;
         return true;
-    }
-
-    
+    }  
 }
