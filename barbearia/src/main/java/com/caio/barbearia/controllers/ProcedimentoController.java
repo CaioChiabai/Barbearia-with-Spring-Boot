@@ -7,6 +7,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.caio.barbearia.dto.FuncionarioProcedimentoDTO;
+import com.caio.barbearia.dto.ProcedimentoView;
 import com.caio.barbearia.entities.Procedimento;
 import com.caio.barbearia.services.ProcedimentoService;
 
@@ -17,11 +19,18 @@ public class ProcedimentoController {
     @Autowired
     private ProcedimentoService service;
 
+    
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Procedimento> findAll(){
+    public List<ProcedimentoView> findAll(){
         return service.findAll();
     }
 
+    @GetMapping(value = "/{id}/funcionarios", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<FuncionarioProcedimentoDTO>> findFuncionariosByProcedimentoId(@PathVariable Long id) {
+        return ResponseEntity.ok(service.findFuncionariosByProcedimentoId(id));
+    }
+
+    
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Procedimento findById(@PathVariable(value = "id") Long id){
         return service.findById(id);

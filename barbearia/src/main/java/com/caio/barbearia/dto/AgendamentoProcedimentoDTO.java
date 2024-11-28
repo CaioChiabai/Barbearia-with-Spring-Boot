@@ -2,8 +2,6 @@ package com.caio.barbearia.dto;
 
 import java.time.LocalDateTime;
 
-import com.caio.barbearia.entities.Status;
-
 public class AgendamentoProcedimentoDTO {
 
     private Long idAgendamento;

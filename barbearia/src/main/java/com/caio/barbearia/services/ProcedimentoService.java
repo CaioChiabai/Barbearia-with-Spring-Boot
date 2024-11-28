@@ -7,7 +7,10 @@ import com.caio.barbearia.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.caio.barbearia.dto.FuncionarioProcedimentoDTO;
+import com.caio.barbearia.dto.ProcedimentoView;
 import com.caio.barbearia.entities.Procedimento;
+import com.caio.barbearia.repositories.FuncionarioProcedimentoRepository;
 import com.caio.barbearia.repositories.ProcedimentoRepository;
 
 @Service
@@ -18,9 +21,16 @@ public class ProcedimentoService {
     @Autowired
     ProcedimentoRepository repository;
 
-    public List<Procedimento> findAll(){       
+    @Autowired
+    FuncionarioProcedimentoRepository funcionarioProcedimentoRepository;
+
+    public List<ProcedimentoView> findAll(){       
         logger.info("Procurando todos os procedimentos!");
-        return repository.findAll();
+        return repository.findAllProjectedBy();
+    }
+
+    public List<FuncionarioProcedimentoDTO> findFuncionariosByProcedimentoId(Long procedimentoId) {
+        return funcionarioProcedimentoRepository.findFuncionariosByProcedimentoId(procedimentoId);
     }
 
     public Procedimento findById(Long id){

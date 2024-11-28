@@ -46,4 +46,5 @@ public class FuncionarioProcedimentoController {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
+    
 }
