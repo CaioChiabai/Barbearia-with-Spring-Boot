@@ -14,7 +14,7 @@ import com.caio.barbearia.entities.Agendamento;
 public interface AgendamentoRepository extends JpaRepository<Agendamento, Long>{
 
     @Query("SELECT new com.caio.barbearia.dto.AgendamentoDTO( " +
-        "a.id, a.dataHoraInicio, c, fp, a.status) " +
+        "a.id, a.data, a.horaInicio, c, fp, a.status) " +
         "FROM Agendamento a " +
         "JOIN a.cliente c " +
         "JOIN a.funcionarioProcedimento fp " +
@@ -22,7 +22,7 @@ public interface AgendamentoRepository extends JpaRepository<Agendamento, Long>{
     List<AgendamentoDTO> findByFuncionarioId(@Param("idFuncionario") Long idFuncionario);
 
     @Query("SELECT new com.caio.barbearia.dto.AgendamentoDTO( " +
-            "a.id, a.dataHoraInicio, c, fp, a.status) " +
+            "a.id, a.data, a.horaInicio, c, fp, a.status) " +
             "FROM Agendamento a " +
             "JOIN a.cliente c " +
             "JOIN a.funcionarioProcedimento fp " +

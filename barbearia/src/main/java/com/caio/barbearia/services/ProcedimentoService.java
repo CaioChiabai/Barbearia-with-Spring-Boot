@@ -4,11 +4,15 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import com.caio.barbearia.exceptions.ResourceNotFoundException;
+import com.caio.barbearia.mapper.ProcedimentoMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.caio.barbearia.dto.FuncionarioProcedimentoDTO;
-import com.caio.barbearia.dto.ProcedimentoView;
+import com.caio.barbearia.dto.request.ProcedimentoRequest;
+import com.caio.barbearia.dto.response.FuncionarioProcedimentoResponse;
+import com.caio.barbearia.dto.response.ProcedimentoResponse;
+import com.caio.barbearia.entities.FuncionarioProcedimento;
 import com.caio.barbearia.entities.Procedimento;
 import com.caio.barbearia.repositories.FuncionarioProcedimentoRepository;
 import com.caio.barbearia.repositories.ProcedimentoRepository;
@@ -24,45 +28,51 @@ public class ProcedimentoService {
     @Autowired
     FuncionarioProcedimentoRepository funcionarioProcedimentoRepository;
 
-    public List<ProcedimentoView> findAll(){       
+    @Autowired
+    private ProcedimentoMapper mapper;
+
+    public List<ProcedimentoResponse> findAll(){       
         logger.info("Procurando todos os procedimentos!");
-        return repository.findAllProjectedBy();
+        List<Procedimento> entities = repository.findAll();
+        return  mapper.toProcedimentoResponseList(entities); 
     }
 
-    public List<FuncionarioProcedimentoDTO> findFuncionariosByProcedimentoId(Long procedimentoId) {
-        return funcionarioProcedimentoRepository.findFuncionariosByProcedimentoId(procedimentoId);
+    public List<FuncionarioProcedimentoResponse> findFuncionariosByProcedimentoId(Long procedimentoId) {
+         return funcionarioProcedimentoRepository.findFuncionariosByProcedimentoId(procedimentoId);
     }
 
-    public Procedimento findById(Long id){
+    public ProcedimentoResponse findById(Long id){
         logger.info("Procurando um procedimento!");
-        return repository.findById(id).
+        Procedimento entity = repository.findById(id).
                 orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+        return mapper.toProcedimentoResponse(entity);
     }
 
-    public Procedimento create(Procedimento procedimento){
+    public ProcedimentoResponse create(ProcedimentoRequest procedimentoRequest){
         logger.info("Criando um procedimento!");
-        return repository.save(procedimento);
+        Procedimento entity = mapper.toProcedimento(procedimentoRequest);
+        Procedimento createdProcedimento = repository.save(entity);
+        return  mapper.toProcedimentoResponse(createdProcedimento);
+        
     }
 
-    public Procedimento update(Procedimento procedimento){
+    public ProcedimentoResponse update(Long id, ProcedimentoRequest procedimentoRequest){
         logger.info("Atualizando um procedimento!");
 
-        Procedimento entity = repository.findById(procedimento.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Não foi encontrado esse ID!"));
-
-        entity.setNome(procedimento.getNome());
-        entity.setPreco(procedimento.getPreco());
-        entity.setDuracao(procedimento.getDuracao());
-        return repository.save(entity);
+        Procedimento entity = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Relacionamento não encontrado com o ID: " + id));
+        mapper.updateProcedimentoFromRequest(procedimentoRequest, entity); 
+        Procedimento updatedEntity = repository.save(entity);
+        return mapper.toProcedimentoResponse(updatedEntity);
     }
 
     public void delete(Long id){
         logger.info("Deletando um procedimento!");
 
-        Procedimento entity = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Não foi encontrado esse ID!"));
-
-        repository.delete(entity);
+        if (!repository.existsById(id)) {
+            throw new ResourceNotFoundException("Relacionamento não encontrado com o ID: " + id);
+        }
+        repository.deleteById(id);
     }
 
 }

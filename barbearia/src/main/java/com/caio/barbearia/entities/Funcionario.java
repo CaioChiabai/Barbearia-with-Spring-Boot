@@ -17,9 +17,6 @@ public class Funcionario extends Pessoa{
     @Column(nullable = false)
     private LocalDate dataContratacao;
 
-    @OneToOne(mappedBy = "funcionario")
-    private JornadaTrabalho jornadaTrabalho;
-
     public Funcionario(){}
 
     public String getCargo() {
@@ -46,14 +43,6 @@ public class Funcionario extends Pessoa{
         this.dataContratacao = dataContratacao;
     }
 
-    public JornadaTrabalho getJornadaTrabalho() {
-        return jornadaTrabalho;
-    }
-
-    public void setJornadaTrabalho(JornadaTrabalho jornadaTrabalho) {
-        this.jornadaTrabalho = jornadaTrabalho;
-    }
-
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -61,7 +50,6 @@ public class Funcionario extends Pessoa{
         result = prime * result + ((cargo == null) ? 0 : cargo.hashCode());
         result = prime * result + ((salario == null) ? 0 : salario.hashCode());
         result = prime * result + ((dataContratacao == null) ? 0 : dataContratacao.hashCode());
-        result = prime * result + ((jornadaTrabalho == null) ? 0 : jornadaTrabalho.hashCode());
         return result;
     }
 
@@ -89,12 +77,8 @@ public class Funcionario extends Pessoa{
                 return false;
         } else if (!dataContratacao.equals(other.dataContratacao))
             return false;
-        if (jornadaTrabalho == null) {
-            if (other.jornadaTrabalho != null)
-                return false;
-        } else if (!jornadaTrabalho.equals(other.jornadaTrabalho))
-            return false;
         return true;
     }
 
+    
 }

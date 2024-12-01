@@ -8,10 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.caio.barbearia.dto.AgendamentoDTO;
 import com.caio.barbearia.entities.Agendamento;
-import com.caio.barbearia.entities.Status;
+import com.caio.barbearia.enums.Status;
 import com.caio.barbearia.exceptions.ResourceNotFoundException;
 import com.caio.barbearia.repositories.AgendamentoRepository;
-import com.caio.barbearia.repositories.StatusRepository;
 
 @Service
 public class AgendamentoService {
@@ -20,9 +19,6 @@ public class AgendamentoService {
 
     @Autowired
     AgendamentoRepository repository;
-
-    @Autowired
-    private StatusRepository statusRepository;
 
     public List<Agendamento> findAll(){
         logger.info("Procurando todos os agendamentos!");
@@ -51,7 +47,8 @@ public class AgendamentoService {
                 .orElseThrow(() -> new ResourceNotFoundException("Não foi encontrado esse ID!"));
 
         entity.setCliente(agendamento.getCliente());
-        entity.setDataHoraInicio(agendamento.getDataHoraInicio());
+        entity.setData(agendamento.getData());
+        entity.setHoraInicio(agendamento.getHoraInicio());
         entity.setFuncionarioProcedimento(agendamento.getFuncionarioProcedimento());
         entity.setStatus(agendamento.getStatus());
         return repository.save(entity);
