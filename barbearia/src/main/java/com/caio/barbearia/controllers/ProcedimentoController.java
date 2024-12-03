@@ -12,6 +12,7 @@ import com.caio.barbearia.dto.request.ProcedimentoRequest;
 import com.caio.barbearia.dto.response.FuncionarioProcedimentoResponse;
 import com.caio.barbearia.dto.response.ProcedimentoResponse;
 import com.caio.barbearia.entities.Procedimento;
+import com.caio.barbearia.services.FuncionarioProcedimentoService;
 import com.caio.barbearia.services.ProcedimentoService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,6 +29,9 @@ public class ProcedimentoController {
 
     @Autowired
     private ProcedimentoService service;
+
+    @Autowired
+    private FuncionarioProcedimentoService funcionarioProcedimentoService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Procurar todos os procedimentos", 
@@ -58,7 +62,7 @@ public class ProcedimentoController {
                    @ApiResponse(description = "Erro interno do servidor", responseCode = "500", content = @Content)
                })
     public ResponseEntity<List<FuncionarioProcedimentoResponse>> findFuncionariosByProcedimentoId(@PathVariable Long id) {
-        List<FuncionarioProcedimentoResponse> funcionarios = service.findFuncionariosByProcedimentoId(id);
+        List<FuncionarioProcedimentoResponse> funcionarios = funcionarioProcedimentoService.findFuncionariosByProcedimentoId(id);
         if (funcionarios.isEmpty()) {
             return ResponseEntity.noContent().build();
         }

@@ -12,9 +12,9 @@ public class AppConfig {
     @Bean
     public OpenAPI configOpenAPI(){
         return new OpenAPI().info(
-            new Info().description("Definição de Apis para o ms Validações")
+            new Info().description("API's para uma barbearia")
                 .version("1.0.0")
-                .title("Validações Api")
+                .title("Validações Api Barbearia")
         );           
     }
 }

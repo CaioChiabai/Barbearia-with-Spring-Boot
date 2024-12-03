@@ -1,62 +1,58 @@
 package com.caio.barbearia.services;
 
+import com.caio.barbearia.dto.request.FuncionarioRequest;
+import com.caio.barbearia.dto.response.FuncionarioResponse;
 import com.caio.barbearia.entities.Funcionario;
 import com.caio.barbearia.exceptions.ResourceNotFoundException;
+import com.caio.barbearia.mapper.FuncionarioMapper;
 import com.caio.barbearia.repositories.FuncionarioRepository;
+
+import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 @Service
+@RequiredArgsConstructor
 public class FuncionarioService {
-
-    private Logger logger = Logger.getLogger(FuncionarioService.class.getName());
 
     @Autowired
     FuncionarioRepository repository;
 
-    public List<Funcionario> findAll(){
-        logger.info("Procurando todos os funcionarios!");
-        return repository.findAll();
+    @Autowired
+    private FuncionarioMapper mapper;
+
+    public List<FuncionarioResponse> findAll() {
+        List<Funcionario> entities = repository.findAll();
+        return mapper.toFuncionarioResponseList(entities);
     }
 
-    public Funcionario findById(Long id){
-        logger.info("Procurando um funcionario!");
-
-        return repository.findById(id).
-        orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
-    }
-
-    public Funcionario create(Funcionario funcionario){
-        logger.info("Criando um funcionario!");
-        return repository.save(funcionario);
-    }
-
-    public Funcionario update(Funcionario funcionario){
-        logger.info("Atualizando um funcionario!");
-
-        Funcionario entity = repository.findById(funcionario.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Não foi encontrado esse ID!"));
-
-        entity.setNome(funcionario.getNome());
-        entity.setSenha( funcionario.getSenha());
-        entity.setEmail(funcionario.getEmail());
-        entity.setCpf(funcionario.getCpf());
-        entity.setCargo(funcionario.getCargo());;
-        entity.setSalario(funcionario.getSalario());
-        entity.setDataContratacao(funcionario.getDataContratacao());
-        return repository.save(entity);
-    }
-
-    public void delete(Long id){
-        logger.info("Deletando um funcionario!");
-
+    public FuncionarioResponse findById(Long id) {
         Funcionario entity = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Não foi encontrado esse ID!"));
+                .orElseThrow(() -> new ResourceNotFoundException("Funcionário não encontrado com o ID: " + id));
+        return mapper.toFuncionarioResponse(entity);
+    }
 
-        repository.delete(entity);
+    public FuncionarioResponse create(FuncionarioRequest request) {
+        Funcionario entity = mapper.toFuncionario(request);
+        Funcionario savedEntity = repository.save(entity);
+        return mapper.toFuncionarioResponse(savedEntity);
+    }
+
+    public FuncionarioResponse update(Long id, FuncionarioRequest request) {
+        Funcionario entity = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Funcionário não encontrado com o ID: " + id));
+        mapper.updateFuncionarioFromRequest(request, entity);
+        Funcionario updatedEntity = repository.save(entity);
+        return mapper.toFuncionarioResponse(updatedEntity);
+    }
+
+    public void delete(Long id) {
+        if (!repository.existsById(id)) {
+            throw new ResourceNotFoundException("Funcionário não encontrado com o ID: " + id);
+        }
+        repository.deleteById(id);
     }
 }

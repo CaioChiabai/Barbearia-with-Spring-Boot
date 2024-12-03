@@ -10,14 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.caio.barbearia.dto.request.ProcedimentoRequest;
-import com.caio.barbearia.dto.response.FuncionarioProcedimentoResponse;
 import com.caio.barbearia.dto.response.ProcedimentoResponse;
-import com.caio.barbearia.entities.FuncionarioProcedimento;
 import com.caio.barbearia.entities.Procedimento;
 import com.caio.barbearia.repositories.FuncionarioProcedimentoRepository;
 import com.caio.barbearia.repositories.ProcedimentoRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class ProcedimentoService {
 
     private Logger logger = Logger.getLogger(ProcedimentoService.class.getName());
@@ -35,10 +36,6 @@ public class ProcedimentoService {
         logger.info("Procurando todos os procedimentos!");
         List<Procedimento> entities = repository.findAll();
         return  mapper.toProcedimentoResponseList(entities); 
-    }
-
-    public List<FuncionarioProcedimentoResponse> findFuncionariosByProcedimentoId(Long procedimentoId) {
-         return funcionarioProcedimentoRepository.findFuncionariosByProcedimentoId(procedimentoId);
     }
 
     public ProcedimentoResponse findById(Long id){
@@ -74,5 +71,4 @@ public class ProcedimentoService {
         }
         repository.deleteById(id);
     }
-
 }

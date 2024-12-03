@@ -1,7 +1,8 @@
 package com.caio.barbearia.dto.response;
 
+import java.time.LocalTime;
+
 import com.caio.barbearia.entities.Funcionario;
-import com.caio.barbearia.entities.Procedimento;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,9 +13,12 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class FuncionarioProcedimentoResponse {
-
+public class JornadaTrabalhoResponse {
+    
     private Long id;
     private Funcionario funcionario;
-    private Procedimento procedimento;
+    private LocalTime inicioJornada;
+    private LocalTime fimJornada;
+    private LocalTime inicioIntervalo;
+    private LocalTime fimIntervalo;
 }

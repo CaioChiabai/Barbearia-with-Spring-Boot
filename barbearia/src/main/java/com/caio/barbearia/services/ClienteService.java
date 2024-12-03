@@ -1,68 +1,58 @@
 package com.caio.barbearia.services;
 
+import com.caio.barbearia.dto.request.ClienteRequest;
+import com.caio.barbearia.dto.response.ClienteResponse;
 import com.caio.barbearia.entities.Cliente;
 import com.caio.barbearia.exceptions.ResourceNotFoundException;
+import com.caio.barbearia.mapper.ClienteMapper;
 import com.caio.barbearia.repositories.ClienteRepository;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 @Service
+@RequiredArgsConstructor
 public class ClienteService {
-
-    private Logger logger = Logger.getLogger(ClienteService.class.getName());
 
     @Autowired
     ClienteRepository repository;
 
-    public List<Cliente> findAll(){
-        logger.info("Procurando todos os cliente!");
-        return repository.findAll();
+    @Autowired
+    private ClienteMapper mapper;
+
+    public List<ClienteResponse> findAll() {
+        List<Cliente> entities = repository.findAll();
+        return mapper.toClienteResponseList(entities);
     }
 
-    public Cliente findById(Long id){
-        logger.info("Procurando um cliente!");
-        return repository.findById(id).
-                orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
-    }
-
-    public Cliente create(Cliente cliente){
-        logger.info("Criando um cliente!");
-
-        // Verifica se já existe um cliente com o email
-        repository.findByEmail(cliente.getEmail()).ifPresent(existingCliente -> {
-            throw new IllegalArgumentException("Já existe um cliente com o email: " + cliente.getEmail());
-        });
-
-        repository.findByCpf(cliente.getCpf()).ifPresent(existingCliente -> {
-            throw new IllegalArgumentException("Já existe um cliente com o cpf: " + cliente.getEmail());
-        });
-
-        return repository.save(cliente);
-    }
-
-    public Cliente update(Cliente cliente){
-        logger.info("Atualizando um cliente!");
-
-        Cliente entity = repository.findById(cliente.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Não foi encontrado esse ID!"));
-
-        entity.setNome(cliente.getNome());
-        entity.setSenha( cliente.getSenha());
-        entity.setEmail(cliente.getEmail());
-        entity.setTelefone(cliente.getTelefone());
-        entity.setCpf(cliente.getCpf());
-        return repository.save(entity);
-    }
-
-    public void delete(Long id){
-        logger.info("Deletando um cliente!");
-
+    public ClienteResponse findById(Long id) {
         Cliente entity = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Não foi encontrado esse ID!"));
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado com o ID: " + id));
+        return mapper.toClienteResponse(entity);
+    }
 
-        repository.delete(entity);
+    public ClienteResponse create(ClienteRequest request) {
+        Cliente entity = mapper.toCliente(request);
+        Cliente savedEntity = repository.save(entity);
+        return mapper.toClienteResponse(savedEntity);
+    }
+
+    public ClienteResponse update(Long id, ClienteRequest request) {
+        Cliente entity = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado com o ID: " + id));
+        mapper.updateClienteFromRequest(request, entity);
+        Cliente updatedEntity = repository.save(entity);
+        return mapper.toClienteResponse(updatedEntity);
+    }
+
+    public void delete(Long id) {
+        if (!repository.existsById(id)) {
+            throw new ResourceNotFoundException("Cliente não encontrado com o ID: " + id);
+        }
+        repository.deleteById(id);
     }
 }

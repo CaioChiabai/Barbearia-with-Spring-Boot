@@ -1,73 +1,69 @@
 package com.caio.barbearia.services;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.caio.barbearia.dto.AgendamentoDTO;
+import com.caio.barbearia.dto.request.AgendamentoRequest;
+import com.caio.barbearia.dto.response.AgendamentoResponse;
 import com.caio.barbearia.entities.Agendamento;
-import com.caio.barbearia.enums.Status;
 import com.caio.barbearia.exceptions.ResourceNotFoundException;
+import com.caio.barbearia.mapper.AgendamentoMapper;
 import com.caio.barbearia.repositories.AgendamentoRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class AgendamentoService {
 
-    private Logger logger = Logger.getLogger(AgendamentoService.class.getName());
+    @Autowired
+    private AgendamentoRepository repository;
 
     @Autowired
-    AgendamentoRepository repository;
+    private AgendamentoMapper mapper;
 
-    public List<Agendamento> findAll(){
-        logger.info("Procurando todos os agendamentos!");
-        return repository.findAll();
+    public List<AgendamentoResponse> findAll() {
+        List<Agendamento> entities = repository.findAll();
+        return mapper.toAgendamentoResponseList(entities);
     }
 
-    public Agendamento findById(Long id){
-        logger.info("Procurando um agendamento!");
-        return repository.findById(id).
-                orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
-    }
-
-    public Agendamento create(Agendamento agendamento){
-        logger.info("Criando um agendamento!");
-        Status statusEmAberto = statusRepository.findByDescricao("Em aberto")
-                .orElseThrow(() -> new IllegalArgumentException("Status 'Em aberto' não encontrado"));
-
-        agendamento.setStatus(statusEmAberto);
-        return repository.save(agendamento);
-    }
-
-    public Agendamento update(Agendamento agendamento){
-        logger.info("Atualizando um agendamento!");
-
-        Agendamento entity = repository.findById(agendamento.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Não foi encontrado esse ID!"));
-
-        entity.setCliente(agendamento.getCliente());
-        entity.setData(agendamento.getData());
-        entity.setHoraInicio(agendamento.getHoraInicio());
-        entity.setFuncionarioProcedimento(agendamento.getFuncionarioProcedimento());
-        entity.setStatus(agendamento.getStatus());
-        return repository.save(entity);
-    }
-
-    public void delete(Long id){
-        logger.info("Deletando um cliente!");
-
+    public AgendamentoResponse findById(Long id) {
         Agendamento entity = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Não foi encontrado esse ID!"));
-
-        repository.delete(entity);
+                .orElseThrow(() -> new ResourceNotFoundException("Agendamento não encontrado com o ID: " + id));
+        return mapper.toAgendamentoResponse(entity);
     }
 
-    public List<AgendamentoDTO> findByFuncionarioId(Long idFuncionario){
-        return repository.findByFuncionarioId(idFuncionario);
+    public AgendamentoResponse create(AgendamentoRequest request) {
+        Agendamento entity = mapper.toAgendamento(request);
+        Agendamento savedEntity = repository.save(entity);
+        return mapper.toAgendamentoResponse(savedEntity);
     }
-    
-    public List<AgendamentoDTO> findByClienteId(Long idCliente){
-        return repository.findByClienteId(idCliente);
+
+    public AgendamentoResponse update(Long id, AgendamentoRequest request) {
+        Agendamento entity = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Agendamento não encontrado com o ID: " + id));
+        mapper.updateAgendamentoFromRequest(request, entity);
+        Agendamento updatedEntity = repository.save(entity);
+        return mapper.toAgendamentoResponse(updatedEntity);
     }
+
+    public void delete(Long id) {
+        if (!repository.existsById(id)) {
+            throw new ResourceNotFoundException("Agendamento não encontrado com o ID: " + id);
+        }
+        repository.deleteById(id);
+    }
+
+    public List<AgendamentoResponse> findByFuncionarioId(Long idFuncionario) {
+        List<Agendamento> agendamentos = repository.findByFuncionarioId(idFuncionario);
+        return mapper.toAgendamentoResponseList(agendamentos);
+    }
+
+    public List<AgendamentoResponse> findByClienteId(Long idCliente) {
+        List<Agendamento> agendamentos = repository.findByClienteId(idCliente);
+        return mapper.toAgendamentoResponseList(agendamentos);
+    }
+
 }

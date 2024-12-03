@@ -22,8 +22,8 @@ public class FuncionarioProcedimentoMapper {
         return mapper.map(request, FuncionarioProcedimento.class);
     }
 
-    public FuncionarioProcedimentoResponse toFuncionarioProcedimentoResponse(FuncionarioProcedimento  status){
-        return mapper.map(status, FuncionarioProcedimentoResponse.class);
+    public FuncionarioProcedimentoResponse toFuncionarioProcedimentoResponse(FuncionarioProcedimento  funcionarioProcedimento){
+        return mapper.map(funcionarioProcedimento, FuncionarioProcedimentoResponse.class);
     }
 
     public List<FuncionarioProcedimentoResponse> toFuncionarioProcedimentoResponseList(List<FuncionarioProcedimento> status){

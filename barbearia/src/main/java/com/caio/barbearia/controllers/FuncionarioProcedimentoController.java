@@ -2,8 +2,6 @@ package com.caio.barbearia.controllers;
 
 import com.caio.barbearia.dto.request.FuncionarioProcedimentoRequest;
 import com.caio.barbearia.dto.response.FuncionarioProcedimentoResponse;
-import com.caio.barbearia.dto.response.ProcedimentoResponse;
-import com.caio.barbearia.entities.FuncionarioProcedimento;
 import com.caio.barbearia.services.FuncionarioProcedimentoService;
 
 import io.swagger.v3.oas.annotations.Operation;

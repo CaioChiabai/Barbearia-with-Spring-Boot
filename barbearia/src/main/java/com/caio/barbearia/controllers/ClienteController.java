@@ -1,9 +1,18 @@
 package com.caio.barbearia.controllers;
 
-import com.caio.barbearia.dto.AgendamentoDTO;
-import com.caio.barbearia.entities.Cliente;
+import com.caio.barbearia.dto.request.ClienteRequest;
+import com.caio.barbearia.dto.response.AgendamentoResponse;
+import com.caio.barbearia.dto.response.ClienteResponse;
 import com.caio.barbearia.services.AgendamentoService;
 import com.caio.barbearia.services.ClienteService;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,6 +23,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/cliente")
+@Tag(name = "Cliente", description = "Endpoints para gerenciar clientes")
 public class ClienteController {
 
     @Autowired
@@ -23,45 +33,94 @@ public class ClienteController {
     private AgendamentoService agendamentoService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Cliente> findAll(){
-        return service.findAll();
+    @Operation(summary = "Listar todos os clientes", 
+               description = "Retorna uma lista de todos os clientes cadastrados",
+               responses = {
+                   @ApiResponse(description = "Lista encontrada com sucesso", responseCode = "200",
+                       content = @Content(array = @ArraySchema(schema = @Schema(implementation = ClienteResponse.class)))),
+                   @ApiResponse(description = "Nenhum cliente encontrado", responseCode = "204", content = @Content),
+                   @ApiResponse(description = "Erro interno do servidor", responseCode = "500", content = @Content)
+               })
+    public ResponseEntity<List<ClienteResponse>> findAll() {
+        List<ClienteResponse> response = service.findAll();
+        if (response.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Cliente findById(@PathVariable(value = "id") Long id){
-
-        return service.findById(id);
+    @Operation(summary = "Buscar cliente por ID", 
+               description = "Busca um cliente específico pelo ID",
+               responses = {
+                   @ApiResponse(description = "Cliente encontrado com sucesso", responseCode = "200",
+                       content = @Content(schema = @Schema(implementation = ClienteResponse.class))),
+                   @ApiResponse(description = "Cliente não encontrado", responseCode = "404", content = @Content),
+                   @ApiResponse(description = "Erro interno do servidor", responseCode = "500", content = @Content)
+               })
+    public ResponseEntity<ClienteResponse> findById(@PathVariable(value = "id") Long id) {
+        return ResponseEntity.ok(service.findById(id));
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Cliente> create(@RequestBody Cliente cliente){
-         try {
-            Cliente novoCliente = service.create(cliente);
-            return ResponseEntity.status(HttpStatus.CREATED).body(novoCliente);
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Criar um novo cliente", 
+               description = "Cria um novo cliente com base nos dados fornecidos",
+               responses = {
+                   @ApiResponse(description = "Cliente criado com sucesso", responseCode = "201",
+                       content = @Content(schema = @Schema(implementation = ClienteResponse.class))),
+                   @ApiResponse(description = "Dados inválidos", responseCode = "400", content = @Content),
+                   @ApiResponse(description = "Erro interno do servidor", responseCode = "500", content = @Content)
+               })
+    public ResponseEntity<ClienteResponse> create(@RequestBody ClienteRequest clienteRequest) {
+        try {
+            ClienteResponse response = service.create(clienteRequest);
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
-    @PutMapping(value = "/{id}",
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public Cliente update(@RequestBody Cliente cliente){
-        return service.update(cliente);
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Atualizar cliente", 
+               description = "Atualiza as informações de um cliente existente",
+               responses = {
+                   @ApiResponse(description = "Cliente atualizado com sucesso", responseCode = "200",
+                       content = @Content(schema = @Schema(implementation = ClienteResponse.class))),
+                   @ApiResponse(description = "Dados inválidos", responseCode = "400", content = @Content),
+                   @ApiResponse(description = "Cliente não encontrado", responseCode = "404", content = @Content),
+                   @ApiResponse(description = "Erro interno do servidor", responseCode = "500", content = @Content)
+               })
+    public ResponseEntity<ClienteResponse> update(@PathVariable Long id, @RequestBody ClienteRequest clienteRequest) {
+        ClienteResponse response = service.update(id, clienteRequest);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<?> delete(@PathVariable(value = "id") Long id){
+    @Operation(summary = "Deletar cliente", 
+               description = "Remove um cliente pelo ID",
+               responses = {
+                   @ApiResponse(description = "Cliente removido com sucesso", responseCode = "204", content = @Content),
+                   @ApiResponse(description = "Cliente não encontrado", responseCode = "404", content = @Content),
+                   @ApiResponse(description = "Erro interno do servidor", responseCode = "500", content = @Content)
+               })
+    public ResponseEntity<Void> delete(@PathVariable(value = "id") Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
-    
-    @GetMapping(value = "/{id}/agendamento")
-    public ResponseEntity<List<AgendamentoDTO>> listarAgendamentos(@PathVariable Long id) {
-        List<AgendamentoDTO> agendamentos = agendamentoService.findByClienteId(id);
-        return ResponseEntity.ok(agendamentos);
+
+    @GetMapping(value = "/{id}/agendamento", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Listar agendamentos do cliente", 
+               description = "Retorna uma lista de todos os agendamentos relacionados a um cliente",
+               responses = {
+                   @ApiResponse(description = "Agendamentos encontrados com sucesso", responseCode = "200",
+                       content = @Content(array = @ArraySchema(schema = @Schema(implementation = AgendamentoResponse.class)))),
+                   @ApiResponse(description = "Nenhum agendamento encontrado", responseCode = "204", content = @Content),
+                   @ApiResponse(description = "Cliente não encontrado", responseCode = "404", content = @Content),
+                   @ApiResponse(description = "Erro interno do servidor", responseCode = "500", content = @Content)
+               })
+    public ResponseEntity<List<AgendamentoResponse>> listarAgendamentos(@PathVariable Long id) {
+        List<AgendamentoResponse> response = agendamentoService.findByClienteId(id);
+        return ResponseEntity.ok(response);
     }
     
-
 }

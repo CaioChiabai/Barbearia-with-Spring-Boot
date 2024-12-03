@@ -1,59 +1,58 @@
 package com.caio.barbearia.services;
 
+import com.caio.barbearia.dto.request.JornadaTrabalhoRequest;
+import com.caio.barbearia.dto.response.JornadaTrabalhoResponse;
 import com.caio.barbearia.entities.JornadaTrabalho;
 import com.caio.barbearia.exceptions.ResourceNotFoundException;
+import com.caio.barbearia.mapper.JornadaTrabalhoMapper;
 import com.caio.barbearia.repositories.JornadaTrabalhoRepository;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 @Service
+@RequiredArgsConstructor
 public class JornadaTrabalhoService {
 
-    private Logger logger = Logger.getLogger(JornadaTrabalhoService.class.getName());
+    @Autowired
+    private JornadaTrabalhoRepository repository;
 
     @Autowired
-    JornadaTrabalhoRepository repository;
+    private JornadaTrabalhoMapper mapper;
 
-    public List<JornadaTrabalho> findAll(){
-        logger.info("Procurando todos as jornadas de trabalhos!");
-        return repository.findAll();
+    public List<JornadaTrabalhoResponse> findAll() {
+        List<JornadaTrabalho> entities = repository.findAll();
+        return mapper.toJornadaTrabalhoResponseList(entities);
     }
 
-    public JornadaTrabalho findById(Long id){
-        logger.info("Procurando uma jornada de trabalho!");
-        return repository.findById(id).
-                orElseThrow(() -> new ResourceNotFoundException("Não foi encontrado esse ID"));
-    }
-
-    public JornadaTrabalho create(JornadaTrabalho jornadaTrabalho){
-        logger.info("Criando uma jornada de trabalho!");
-        return repository.save(jornadaTrabalho);
-    }
-
-    public JornadaTrabalho update(JornadaTrabalho jornadaTrabalho){
-        logger.info("Atualizando uma jornada de trabalho!");
-
-        JornadaTrabalho entity = repository.findById(jornadaTrabalho.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Não foi encontrado esse ID!"));
-
-        entity.setFuncionario(jornadaTrabalho.getFuncionario());
-        entity.setInicioJornada(jornadaTrabalho.getInicioJornada());
-        entity.setFimJornada(jornadaTrabalho.getFimJornada());
-        entity.setInicioIntervalo(jornadaTrabalho.getInicioIntervalo());
-        entity.setFimIntervalo(jornadaTrabalho.getFimIntervalo());
-
-        return repository.save(entity);
-    }
-
-    public void delete(Long id){
-        logger.info("Deletando uma jornada de trabalho!");
-
+    public JornadaTrabalhoResponse findById(Long id) {
         JornadaTrabalho entity = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Não foi encontrado esse ID!"));
+                .orElseThrow(() -> new ResourceNotFoundException("Jornada de trabalho não encontrada com o ID: " + id));
+        return mapper.toJornadaTrabalhoResponse(entity);
+    }
 
-        repository.delete(entity);
+    public JornadaTrabalhoResponse create(JornadaTrabalhoRequest request) {
+        JornadaTrabalho entity = mapper.toJornadaTrabalho(request);
+        JornadaTrabalho savedEntity = repository.save(entity);
+        return mapper.toJornadaTrabalhoResponse(savedEntity);
+    }
+
+    public JornadaTrabalhoResponse update(Long id, JornadaTrabalhoRequest request) {
+        JornadaTrabalho entity = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Jornada de trabalho não encontrada com o ID: " + id));
+        mapper.updateJornadaTrabalhoFromRequest(request, entity); 
+        JornadaTrabalho updatedEntity = repository.save(entity);
+        return mapper.toJornadaTrabalhoResponse(updatedEntity);
+    }
+
+    public void delete(Long id) {
+        if (!repository.existsById(id)) {
+            throw new ResourceNotFoundException("Jornada de trabalho não encontrada com o ID: " + id);
+        }
+        repository.deleteById(id);
     }
 }

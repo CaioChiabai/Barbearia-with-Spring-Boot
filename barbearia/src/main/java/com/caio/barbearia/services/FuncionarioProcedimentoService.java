@@ -6,16 +6,17 @@ import com.caio.barbearia.entities.FuncionarioProcedimento;
 import com.caio.barbearia.exceptions.ResourceNotFoundException;
 import com.caio.barbearia.mapper.FuncionarioProcedimentoMapper;
 import com.caio.barbearia.repositories.FuncionarioProcedimentoRepository;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 @Service
+@RequiredArgsConstructor
 public class FuncionarioProcedimentoService {
-
-    private Logger logger = Logger.getLogger(FuncionarioProcedimentoService.class.getName());
 
     @Autowired
     private FuncionarioProcedimentoRepository repository;
@@ -54,4 +55,9 @@ public class FuncionarioProcedimentoService {
         }
         repository.deleteById(id);
     }
+
+    public List<FuncionarioProcedimentoResponse> findFuncionariosByProcedimentoId(Long procedimentoId) {
+        List<FuncionarioProcedimento> funcionarios = repository.findFuncionariosByProcedimentoId(procedimentoId);
+        return mapper.toFuncionarioProcedimentoResponseList(funcionarios);
+   }
 }
