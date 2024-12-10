@@ -35,6 +35,12 @@ public class FuncionarioService {
         return mapper.toFuncionarioResponse(entity);
     }
 
+    public FuncionarioResponse findFuncionarioByUserId(String userId) {
+        Funcionario entity = repository.findByUserId(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Funcionário não encontrado para o user ID: " + userId));
+        return mapper.toFuncionarioResponse(entity);
+    }
+
     public FuncionarioResponse create(FuncionarioRequest request) {
         Funcionario entity = mapper.toFuncionario(request);
         Funcionario savedEntity = repository.save(entity);

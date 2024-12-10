@@ -3,6 +3,8 @@ package com.caio.barbearia.controllers;
 import com.caio.barbearia.dto.request.FuncionarioRequest;
 import com.caio.barbearia.dto.response.AgendamentoResponse;
 import com.caio.barbearia.dto.response.FuncionarioResponse;
+import com.caio.barbearia.entities.User;
+import com.caio.barbearia.enums.UserRole;
 import com.caio.barbearia.services.AgendamentoService;
 import com.caio.barbearia.services.FuncionarioService;
 
@@ -17,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -60,6 +64,16 @@ public class FuncionarioController {
                    @ApiResponse(description = "Erro interno do servidor", responseCode = "500", content = @Content)
                })
     public ResponseEntity<FuncionarioResponse> findById(@PathVariable(value = "id") Long id) {
+        // Obter o usuário autenticado
+        User authenticatedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (authenticatedUser.getRole() == UserRole.FUNCIONARIO) {
+            FuncionarioResponse funcionarioResponse = service.findFuncionarioByUserId(authenticatedUser.getId());
+            if (funcionarioResponse == null || !funcionarioResponse.getId().equals(id)) {
+                throw new AccessDeniedException("Acesso negado: você só pode acessar seus próprios dados.");
+            }
+        }
+
         return ResponseEntity.ok(service.findById(id));
     }
 

@@ -1,11 +1,19 @@
 package com.caio.barbearia.entities;
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@EqualsAndHashCode
 public class Funcionario extends Pessoa{
 
     @Column(nullable = false, length = 100)
@@ -17,68 +25,7 @@ public class Funcionario extends Pessoa{
     @Column(nullable = false)
     private LocalDate dataContratacao;
 
-    public Funcionario(){}
-
-    public String getCargo() {
-        return cargo;
-    }
-
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
-    }
-
-    public BigDecimal getSalario() {
-        return salario;
-    }
-
-    public void setSalario(BigDecimal salario) {
-        this.salario = salario;
-    }
-
-    public LocalDate getDataContratacao() {
-        return dataContratacao;
-    }
-
-    public void setDataContratacao(LocalDate dataContratacao) {
-        this.dataContratacao = dataContratacao;
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = super.hashCode();
-        result = prime * result + ((cargo == null) ? 0 : cargo.hashCode());
-        result = prime * result + ((salario == null) ? 0 : salario.hashCode());
-        result = prime * result + ((dataContratacao == null) ? 0 : dataContratacao.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (!super.equals(obj))
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Funcionario other = (Funcionario) obj;
-        if (cargo == null) {
-            if (other.cargo != null)
-                return false;
-        } else if (!cargo.equals(other.cargo))
-            return false;
-        if (salario == null) {
-            if (other.salario != null)
-                return false;
-        } else if (!salario.equals(other.salario))
-            return false;
-        if (dataContratacao == null) {
-            if (other.dataContratacao != null)
-                return false;
-        } else if (!dataContratacao.equals(other.dataContratacao))
-            return false;
-        return true;
-    }
-
-    
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

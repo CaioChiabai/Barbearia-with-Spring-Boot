@@ -20,7 +20,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class User implements UserDetails{
 
@@ -31,6 +30,12 @@ public class User implements UserDetails{
     private String password;
     private UserRole role;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Cliente cliente;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Funcionario funcionario;
+
     public User(String login, String password, UserRole role){
         this.login = login;
         this.password = password;
@@ -40,8 +45,19 @@ public class User implements UserDetails{
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
-        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        switch (this.role) {
+            case ADMIN:
+                return List.of(
+                        new SimpleGrantedAuthority("ROLE_ADMIN"),
+                        new SimpleGrantedAuthority("ROLE_CLIENTE"),
+                        new SimpleGrantedAuthority("ROLE_FUNCIONARIO")
+                );
+            case FUNCIONARIO:
+                return List.of(new SimpleGrantedAuthority("ROLE_FUNCIONARIO"));
+            case CLIENTE:
+            default:
+                return List.of(new SimpleGrantedAuthority("ROLE_CLIENTE"));
+        }
     }
 
     @Override

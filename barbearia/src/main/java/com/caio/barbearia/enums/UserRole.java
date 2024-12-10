@@ -3,7 +3,8 @@ package com.caio.barbearia.enums;
 public enum UserRole {
 
     ADMIN("admin"),
-    USER("user");
+    FUNCIONARIO("funcionario"),
+    CLIENTE("cliente");
 
     private String role;
 
