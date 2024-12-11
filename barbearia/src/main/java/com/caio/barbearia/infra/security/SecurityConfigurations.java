@@ -72,6 +72,13 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.PUT, "/agendamento/**").hasAnyRole("ADMIN","CLIENTE")
                         .requestMatchers(HttpMethod.DELETE, "/agendamento/**").hasAnyRole("ADMIN","CLIENTE")
 
+                        //Liberando acesso ao swagger
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html"
+                        ).permitAll()
+
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
