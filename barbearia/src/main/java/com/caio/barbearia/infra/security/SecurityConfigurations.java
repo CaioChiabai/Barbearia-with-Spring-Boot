@@ -62,8 +62,8 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET, "/funcionario_procedimento").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/funcionario_procedimento/{id}").hasAnyRole("ADMIN","FUNCIONARIO","CLIENTE")
                         .requestMatchers(HttpMethod.POST, "/funcionario_procedimento/**").hasAnyRole("ADMIN","FUNCIONARIO")
-                        .requestMatchers(HttpMethod.PUT, "/funcionario_procedimento/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/funcionario_procedimento/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/funcionario_procedimento/**").hasAnyRole("ADMIN","FUNCIONARIO")
+                        .requestMatchers(HttpMethod.DELETE, "/funcionario_procedimento/**").hasAnyRole("ADMIN","FUNCIONARIO")
 
                         // Restringir acesso à entidade AGENDAMENTO
                         .requestMatchers(HttpMethod.GET, "/agendamento").hasRole("ADMIN")

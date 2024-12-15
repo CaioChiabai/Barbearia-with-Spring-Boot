@@ -64,9 +64,8 @@ public class FuncionarioController {
                    @ApiResponse(description = "Erro interno do servidor", responseCode = "500", content = @Content)
                })
     public ResponseEntity<FuncionarioResponse> findById(@PathVariable(value = "id") Long id) {
-        // Obter o usuário autenticado
+        // Validação para verificar se usuario autenticado é o mesmo que está tentando acessar
         User authenticatedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
         if (authenticatedUser.getRole() == UserRole.FUNCIONARIO) {
             FuncionarioResponse funcionarioResponse = service.findFuncionarioByUserId(authenticatedUser.getId());
             if (funcionarioResponse == null || !funcionarioResponse.getId().equals(id)) {
@@ -74,6 +73,7 @@ public class FuncionarioController {
             }
         }
 
+        //ADMIN pode ver de qualquer funcionario
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -134,6 +134,15 @@ public class FuncionarioController {
                    @ApiResponse(description = "Erro interno do servidor", responseCode = "500", content = @Content)
                })
     public ResponseEntity<List<AgendamentoResponse>> listarAgendamentos(@PathVariable Long id) {
+         // Validação para verificar se usuario autenticado é o mesmo que está tentando acessar
+         User authenticatedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+         if (authenticatedUser.getRole() == UserRole.FUNCIONARIO) {
+             FuncionarioResponse funcionarioResponse = service.findFuncionarioByUserId(authenticatedUser.getId());
+             if (funcionarioResponse == null || !funcionarioResponse.getId().equals(id)) {
+                 throw new AccessDeniedException("Acesso negado: você só pode acessar seus próprios dados.");
+             }
+         }
+        
         List<AgendamentoResponse> agendamentos = agendamentoService.findByFuncionarioId(id);
         return ResponseEntity.ok(agendamentos);
     }

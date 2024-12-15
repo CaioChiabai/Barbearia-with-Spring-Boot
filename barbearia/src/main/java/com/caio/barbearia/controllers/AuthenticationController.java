@@ -10,6 +10,7 @@ import com.caio.barbearia.repositories.UserRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("auth")
+@Tag(name = "Authentication", description = "Endpoints para autenticação e registro de usuários")
 public class AuthenticationController {
 
     @Autowired
@@ -35,7 +37,7 @@ public class AuthenticationController {
     private TokenService tokenService;
 
     @PostMapping("/login")
-    @Operation(summary = "User login", description = "Authenticate user and return a token")
+    @Operation(summary = "User login", description = "Autentica um usuário e retorna um token de acesso")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Successful login"),
         @ApiResponse(responseCode = "400", description = "Invalid login credentials")
@@ -50,7 +52,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    @Operation(summary = "User registration", description = "Register a new user")
+    @Operation(summary = "User registration", description = "Registra um novo usuário no sistema")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Successful registration"),
         @ApiResponse(responseCode = "400", description = "User already exists")

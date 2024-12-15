@@ -1,0 +1,40 @@
+version: '3.9'
+services:
+  db:
+    image: mysql:8.0.29
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      TZ: 'America/Sao_Paulo'
+      MYSQL_ROOT_PASSWORD: "@Luiza2212"
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: docker
+      MYSQL_DATABASE: barbearia
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_TCP_PORT: 3308
+    ports:
+      - 3308:3308
+    expose:
+      - 3308
+    networks:
+      - caio-network
+  barbearia:
+    image: caiochiabai/barbearia
+    restart: always
+    build: ./barbearia
+    working_dir: /barbearia
+    environment:
+      TZ: 'America/Sao_Paulo'
+      SPRING.DATASOURCE.URL: jdbc:mysql://db:3308/barbearia?useTimezone=true?serverTimezone=UTC
+      SPRING.DATASOURCE.USERNAME: root
+      SPRING.DATASOURCE.PASSWORD: "@Luiza2212"
+    ports:
+      - 80:80
+    command: mvn spring-boot:run
+    depends_on:
+      - db
+    networks:
+      - caio-network
+networks:
+  caio-network:
+    driver: bridge 
