@@ -1,4 +1,4 @@
-package com.caio.barbearia.dto.request;
+package com.caio.barbearia.dto.request.Pessoa;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

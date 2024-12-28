@@ -1,5 +1,6 @@
-package com.caio.barbearia.dto.response;
+package com.caio.barbearia.dto.response.Cliente;
 
+import com.caio.barbearia.dto.response.Pessoa.PessoaResponse;
 import com.caio.barbearia.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

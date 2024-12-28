@@ -1,4 +1,4 @@
-package com.caio.barbearia.dto.request;
+package com.caio.barbearia.dto.request.FuncionarioProcedimento;
 
 import com.caio.barbearia.entities.Funcionario;
 import com.caio.barbearia.entities.Procedimento;

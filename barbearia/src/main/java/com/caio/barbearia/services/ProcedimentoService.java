@@ -9,8 +9,8 @@ import com.caio.barbearia.mapper.ProcedimentoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.caio.barbearia.dto.request.ProcedimentoRequest;
-import com.caio.barbearia.dto.response.ProcedimentoResponse;
+import com.caio.barbearia.dto.request.Procedimento.ProcedimentoRequest;
+import com.caio.barbearia.dto.response.Procedimento.ProcedimentoResponse;
 import com.caio.barbearia.entities.Procedimento;
 import com.caio.barbearia.repositories.FuncionarioProcedimentoRepository;
 import com.caio.barbearia.repositories.ProcedimentoRepository;

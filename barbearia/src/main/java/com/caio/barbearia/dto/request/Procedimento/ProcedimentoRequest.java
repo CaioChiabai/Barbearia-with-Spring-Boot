@@ -1,4 +1,6 @@
-package com.caio.barbearia.dto.response;
+package com.caio.barbearia.dto.request.Procedimento;
+
+import java.time.LocalTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,11 +11,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PessoaResponse {
+public class ProcedimentoRequest {
 
-    private Long id;
     private String nome;
-    private String senha;
-    private String cpf;
-    private String email;
+    private Double preco;
+    private LocalTime duracao;
 }

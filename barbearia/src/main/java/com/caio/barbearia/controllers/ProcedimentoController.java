@@ -8,9 +8,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.caio.barbearia.dto.request.ProcedimentoRequest;
-import com.caio.barbearia.dto.response.FuncionarioProcedimentoResponse;
-import com.caio.barbearia.dto.response.ProcedimentoResponse;
+import com.caio.barbearia.dto.request.Procedimento.ProcedimentoRequest;
+import com.caio.barbearia.dto.response.FuncionarioProcedimento.FuncionarioProcedimentoResponse;
+import com.caio.barbearia.dto.response.Procedimento.ProcedimentoResponse;
 import com.caio.barbearia.entities.Procedimento;
 import com.caio.barbearia.services.FuncionarioProcedimentoService;
 import com.caio.barbearia.services.ProcedimentoService;

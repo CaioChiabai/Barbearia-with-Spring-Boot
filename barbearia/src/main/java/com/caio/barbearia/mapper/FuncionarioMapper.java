@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
-import com.caio.barbearia.dto.request.FuncionarioRequest;
-import com.caio.barbearia.dto.response.FuncionarioResponse;
+import com.caio.barbearia.dto.request.Funcionario.FuncionarioRequest;
+import com.caio.barbearia.dto.response.Funcionario.FuncionarioResponse;
 import com.caio.barbearia.entities.Funcionario;
 
 import lombok.RequiredArgsConstructor;

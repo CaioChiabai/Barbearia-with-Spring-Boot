@@ -1,7 +1,7 @@
 package com.caio.barbearia.services;
 
-import com.caio.barbearia.dto.request.FuncionarioProcedimentoRequest;
-import com.caio.barbearia.dto.response.FuncionarioProcedimentoResponse;
+import com.caio.barbearia.dto.request.FuncionarioProcedimento.FuncionarioProcedimentoRequest;
+import com.caio.barbearia.dto.response.FuncionarioProcedimento.FuncionarioProcedimentoResponse;
 import com.caio.barbearia.entities.FuncionarioProcedimento;
 import com.caio.barbearia.exceptions.ResourceNotFoundException;
 import com.caio.barbearia.mapper.FuncionarioProcedimentoMapper;

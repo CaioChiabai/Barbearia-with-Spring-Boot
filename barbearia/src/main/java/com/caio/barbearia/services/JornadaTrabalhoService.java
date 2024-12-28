@@ -1,7 +1,7 @@
 package com.caio.barbearia.services;
 
-import com.caio.barbearia.dto.request.JornadaTrabalhoRequest;
-import com.caio.barbearia.dto.response.JornadaTrabalhoResponse;
+import com.caio.barbearia.dto.request.JornadaTrabalho.JornadaTrabalhoRequest;
+import com.caio.barbearia.dto.response.JornadaTrabalho.JornadaTrabalhoResponse;
 import com.caio.barbearia.entities.JornadaTrabalho;
 import com.caio.barbearia.exceptions.ResourceNotFoundException;
 import com.caio.barbearia.mapper.JornadaTrabalhoMapper;

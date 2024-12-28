@@ -1,4 +1,4 @@
-package com.caio.barbearia.dto.request;
+package com.caio.barbearia.dto.response.Agendamento;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -16,8 +16,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AgendamentoRequest {
+public class AgendamentoResponse {
 
+    private Long id;
     private Cliente cliente;
     private LocalTime horaInicio;
     private LocalDate data;

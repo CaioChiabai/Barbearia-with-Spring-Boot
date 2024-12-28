@@ -1,4 +1,4 @@
-package com.caio.barbearia.dto.response;
+package com.caio.barbearia.dto.response.Procedimento;
 
 import java.time.LocalTime;
 

@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.caio.barbearia.dto.request.AgendamentoRequest;
-import com.caio.barbearia.dto.response.AgendamentoResponse;
+import com.caio.barbearia.dto.request.Agendamento.AgendamentoRequest;
+import com.caio.barbearia.dto.response.Agendamento.AgendamentoResponse;
 import com.caio.barbearia.services.AgendamentoService;
 
 import io.swagger.v3.oas.annotations.Operation;

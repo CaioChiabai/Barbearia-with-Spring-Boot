@@ -1,4 +1,4 @@
-package com.caio.barbearia.dto.request;
+package com.caio.barbearia.dto.request.Funcionario;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import com.caio.barbearia.dto.request.Pessoa.PessoaRequest;
 import com.caio.barbearia.entities.User;
 
 @Getter

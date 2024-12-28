@@ -1,8 +1,8 @@
 package com.caio.barbearia.controllers;
 
-import com.caio.barbearia.dto.request.FuncionarioRequest;
-import com.caio.barbearia.dto.response.AgendamentoResponse;
-import com.caio.barbearia.dto.response.FuncionarioResponse;
+import com.caio.barbearia.dto.request.Funcionario.FuncionarioRequest;
+import com.caio.barbearia.dto.response.Agendamento.AgendamentoResponse;
+import com.caio.barbearia.dto.response.Funcionario.FuncionarioResponse;
 import com.caio.barbearia.entities.User;
 import com.caio.barbearia.enums.UserRole;
 import com.caio.barbearia.services.AgendamentoService;

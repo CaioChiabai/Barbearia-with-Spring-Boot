@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
-import com.caio.barbearia.dto.request.AgendamentoRequest;
-import com.caio.barbearia.dto.response.AgendamentoResponse;
+import com.caio.barbearia.dto.request.Agendamento.AgendamentoRequest;
+import com.caio.barbearia.dto.response.Agendamento.AgendamentoResponse;
 import com.caio.barbearia.entities.Agendamento;
 
 import lombok.RequiredArgsConstructor;

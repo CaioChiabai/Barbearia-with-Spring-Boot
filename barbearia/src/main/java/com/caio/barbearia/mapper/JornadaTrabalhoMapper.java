@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
-import com.caio.barbearia.dto.request.JornadaTrabalhoRequest;
-import com.caio.barbearia.dto.response.JornadaTrabalhoResponse;
+import com.caio.barbearia.dto.request.JornadaTrabalho.JornadaTrabalhoRequest;
+import com.caio.barbearia.dto.response.JornadaTrabalho.JornadaTrabalhoResponse;
 import com.caio.barbearia.entities.JornadaTrabalho;
 
 import lombok.RequiredArgsConstructor;

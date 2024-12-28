@@ -1,6 +1,6 @@
 package com.caio.barbearia.dto.request.Cliente;
 
-import com.caio.barbearia.dto.request.PessoaRequest;
+import com.caio.barbearia.dto.request.Pessoa.PessoaRequest;
 import com.caio.barbearia.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

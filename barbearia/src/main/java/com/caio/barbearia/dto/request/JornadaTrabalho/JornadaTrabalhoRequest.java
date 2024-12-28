@@ -1,4 +1,4 @@
-package com.caio.barbearia.dto.response;
+package com.caio.barbearia.dto.request.JornadaTrabalho;
 
 import java.time.LocalTime;
 
@@ -13,9 +13,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class JornadaTrabalhoResponse {
-    
-    private Long id;
+public class JornadaTrabalhoRequest {
+
     private Funcionario funcionario;
     private LocalTime inicioJornada;
     private LocalTime fimJornada;

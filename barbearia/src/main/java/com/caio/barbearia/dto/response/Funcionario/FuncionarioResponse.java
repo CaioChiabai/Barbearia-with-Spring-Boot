@@ -1,8 +1,9 @@
-package com.caio.barbearia.dto.response;
+package com.caio.barbearia.dto.response.Funcionario;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import com.caio.barbearia.dto.response.Pessoa.PessoaResponse;
 import com.caio.barbearia.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

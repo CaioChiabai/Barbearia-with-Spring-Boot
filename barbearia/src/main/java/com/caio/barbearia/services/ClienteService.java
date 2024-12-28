@@ -1,8 +1,8 @@
 package com.caio.barbearia.services;
 
 import com.caio.barbearia.dto.request.Cliente.ClienteRequest;
-import com.caio.barbearia.dto.response.ClienteResponse;
-import com.caio.barbearia.dto.response.FuncionarioResponse;
+import com.caio.barbearia.dto.response.Cliente.ClienteResponse;
+import com.caio.barbearia.dto.response.Funcionario.FuncionarioResponse;
 import com.caio.barbearia.entities.Cliente;
 import com.caio.barbearia.entities.Funcionario;
 import com.caio.barbearia.exceptions.ResourceNotFoundException;

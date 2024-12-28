@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.caio.barbearia.dto.request.AgendamentoRequest;
-import com.caio.barbearia.dto.response.AgendamentoResponse;
+import com.caio.barbearia.dto.request.Agendamento.AgendamentoRequest;
+import com.caio.barbearia.dto.response.Agendamento.AgendamentoResponse;
 import com.caio.barbearia.entities.Agendamento;
 import com.caio.barbearia.exceptions.ResourceNotFoundException;
 import com.caio.barbearia.mapper.AgendamentoMapper;
