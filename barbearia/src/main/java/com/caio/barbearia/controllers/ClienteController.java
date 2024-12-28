@@ -1,8 +1,10 @@
 package com.caio.barbearia.controllers;
 
-import com.caio.barbearia.dto.request.ClienteRequest;
+import com.caio.barbearia.dto.request.Cliente.ClienteRequest;
 import com.caio.barbearia.dto.response.AgendamentoResponse;
 import com.caio.barbearia.dto.response.ClienteResponse;
+import com.caio.barbearia.entities.User;
+import com.caio.barbearia.enums.UserRole;
 import com.caio.barbearia.services.AgendamentoService;
 import com.caio.barbearia.services.ClienteService;
 
@@ -17,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -59,6 +63,15 @@ public class ClienteController {
                    @ApiResponse(description = "Erro interno do servidor", responseCode = "500", content = @Content)
                })
     public ResponseEntity<ClienteResponse> findById(@PathVariable(value = "id") Long id) {
+        // Obtém o usuário autenticado do contexto de segurança
+        User authenticatedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        // Validação para verificar se usuario autenticado é o mesmo que está tentando acessar
+        if (authenticatedUser.getRole() == UserRole.CLIENTE) {
+            ClienteResponse clienteResponse = service.findClienteByUserId(authenticatedUser.getId());
+            if (clienteResponse == null || !clienteResponse.getId().equals(id)) {
+                throw new AccessDeniedException("Acesso negado: você só pode acessar seus próprios dados.");
+            }
+        }
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -91,6 +104,16 @@ public class ClienteController {
                    @ApiResponse(description = "Erro interno do servidor", responseCode = "500", content = @Content)
                })
     public ResponseEntity<ClienteResponse> update(@PathVariable Long id, @RequestBody ClienteRequest clienteRequest) {
+        // Obtém o usuário autenticado do contexto de segurança
+        User authenticatedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        // Valida se o usuário autenticado é um cliente e garante que ele só pode atualizar seus próprios dados
+        if (authenticatedUser.getRole() == UserRole.CLIENTE) {
+            ClienteResponse clienteResponse = service.findClienteByUserId(authenticatedUser.getId());
+            if (clienteResponse == null || !clienteResponse.getId().equals(id)) {
+                throw new AccessDeniedException("Acesso negado: você só pode atualizar seus próprios dados.");
+            }
+        }
+
         ClienteResponse response = service.update(id, clienteRequest);
         return ResponseEntity.ok(response);
     }
@@ -104,6 +127,16 @@ public class ClienteController {
                    @ApiResponse(description = "Erro interno do servidor", responseCode = "500", content = @Content)
                })
     public ResponseEntity<Void> delete(@PathVariable(value = "id") Long id) {
+        // Obtém o usuário autenticado do contexto de segurança
+        User authenticatedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        // Valida se o usuário autenticado é um cliente e garante que ele só pode atualizar seus próprios dados
+        if (authenticatedUser.getRole() == UserRole.CLIENTE) {
+            ClienteResponse clienteResponse = service.findClienteByUserId(authenticatedUser.getId());
+            if (clienteResponse == null || !clienteResponse.getId().equals(id)) {
+                throw new AccessDeniedException("Acesso negado: você só pode deletar seus próprios dados.");
+            }
+        }
+
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
@@ -119,6 +152,16 @@ public class ClienteController {
                    @ApiResponse(description = "Erro interno do servidor", responseCode = "500", content = @Content)
                })
     public ResponseEntity<List<AgendamentoResponse>> listarAgendamentos(@PathVariable Long id) {
+        // Obtém o usuário autenticado do contexto de segurança
+        User authenticatedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        // Valida se o usuário autenticado é um cliente e garante que ele só pode atualizar seus próprios dados
+        if (authenticatedUser.getRole() == UserRole.CLIENTE) {
+            ClienteResponse clienteResponse = service.findClienteByUserId(authenticatedUser.getId());
+            if (clienteResponse == null || !clienteResponse.getId().equals(id)) {
+                throw new AccessDeniedException("Acesso negado: você só pode acessar seus próprios dados.");
+            }
+        }
+
         List<AgendamentoResponse> response = agendamentoService.findByClienteId(id);
         return ResponseEntity.ok(response);
     }

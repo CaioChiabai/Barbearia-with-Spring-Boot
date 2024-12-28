@@ -1,8 +1,10 @@
 package com.caio.barbearia.services;
 
-import com.caio.barbearia.dto.request.ClienteRequest;
+import com.caio.barbearia.dto.request.Cliente.ClienteRequest;
 import com.caio.barbearia.dto.response.ClienteResponse;
+import com.caio.barbearia.dto.response.FuncionarioResponse;
 import com.caio.barbearia.entities.Cliente;
+import com.caio.barbearia.entities.Funcionario;
 import com.caio.barbearia.exceptions.ResourceNotFoundException;
 import com.caio.barbearia.mapper.ClienteMapper;
 import com.caio.barbearia.repositories.ClienteRepository;
@@ -32,6 +34,12 @@ public class ClienteService {
     public ClienteResponse findById(Long id) {
         Cliente entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado com o ID: " + id));
+        return mapper.toClienteResponse(entity);
+    }
+
+    public ClienteResponse findClienteByUserId(String userId) {
+        Cliente entity = repository.findByUserId(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Funcionário não encontrado para o user ID: " + userId));
         return mapper.toClienteResponse(entity);
     }
 
