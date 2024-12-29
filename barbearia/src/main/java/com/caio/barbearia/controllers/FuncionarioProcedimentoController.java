@@ -3,7 +3,6 @@ package com.caio.barbearia.controllers;
 import com.caio.barbearia.dto.request.FuncionarioProcedimento.FuncionarioProcedimentoRequest;
 import com.caio.barbearia.dto.response.Funcionario.FuncionarioResponse;
 import com.caio.barbearia.dto.response.FuncionarioProcedimento.FuncionarioProcedimentoResponse;
-import com.caio.barbearia.entities.Funcionario;
 import com.caio.barbearia.entities.User;
 import com.caio.barbearia.services.FuncionarioProcedimentoService;
 import com.caio.barbearia.services.FuncionarioService;

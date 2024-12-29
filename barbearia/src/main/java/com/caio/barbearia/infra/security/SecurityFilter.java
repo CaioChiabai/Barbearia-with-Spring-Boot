@@ -1,7 +1,6 @@
 package com.caio.barbearia.infra.security;
 
 import com.caio.barbearia.repositories.UserRepository;
-import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

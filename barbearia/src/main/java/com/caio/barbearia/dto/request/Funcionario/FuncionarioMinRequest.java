@@ -1,7 +1,8 @@
-package com.caio.barbearia.dto.request.Cliente;
+package com.caio.barbearia.dto.request.Funcionario;
 
-import com.caio.barbearia.dto.request.Pessoa.PessoaRequest;
+import com.caio.barbearia.dto.request.Pessoa.PessoaMinRequest;
 import com.caio.barbearia.entities.User;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,8 +12,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClienteRequest extends PessoaRequest{
-
-    private String telefone;
+public class FuncionarioMinRequest extends PessoaMinRequest {
+    
+    private String cargo;
     private User user;
+
 }
