@@ -1,4 +1,4 @@
-package com.caio.barbearia.dto.request.Pessoa;
+package com.caio.barbearia.dto.response.Pessoa;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +9,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PessoaMinRequest {
-    
+public class PessoaMinResponse {
+
+    private Long id;
     private String nome;
+    private String cpf;
     private String email;
 }

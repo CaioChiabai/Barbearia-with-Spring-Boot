@@ -1,6 +1,6 @@
-package com.caio.barbearia.dto.request.Funcionario;
+package com.caio.barbearia.dto.response.Funcionario;
 
-import com.caio.barbearia.dto.request.Pessoa.PessoaMinRequest;
+import com.caio.barbearia.dto.response.Pessoa.PessoaMinResponse;
 import com.caio.barbearia.entities.User;
 
 import lombok.AllArgsConstructor;
@@ -12,9 +12,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class FuncionarioMinRequest extends PessoaMinRequest {
-    
+public class FuncionarioMinResponse extends PessoaMinResponse{
+
     private String cargo;
     private User user;
-
 }
