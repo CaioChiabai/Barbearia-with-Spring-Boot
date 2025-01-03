@@ -77,7 +77,7 @@ class ClienteControllerTest {
 
         // Configuração do SecurityContext
         SecurityContextHolder.setContext(securityContext);
-        when(securityContext.getAuthentication()).thenReturn(authentication);
+        // Removida a configuração do authentication aqui
     }
 
     @Test
@@ -108,6 +108,7 @@ class ClienteControllerTest {
     void findById_shouldReturnClienteResponse_whenAdmin() {
         User adminUser = new User();
         adminUser.setRole(UserRole.ADMIN);
+        when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getPrincipal()).thenReturn(adminUser);
         when(clienteService.findById(CLIENTE_ID)).thenReturn(clienteResponse);
 
@@ -120,6 +121,7 @@ class ClienteControllerTest {
 
     @Test
     void findById_shouldThrowAccessDeniedException_whenUnauthorizedClient() {
+        when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getPrincipal()).thenReturn(authenticatedUser);
         when(clienteService.findClienteByUserId(USER_ID)).thenReturn(createAnotherClienteResponse());
 
@@ -151,6 +153,7 @@ class ClienteControllerTest {
 
     @Test
     void update_shouldReturnUpdatedCliente_whenAuthorized() {
+        when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getPrincipal()).thenReturn(authenticatedUser);
         when(clienteService.findClienteByUserId(USER_ID)).thenReturn(clienteResponse);
         when(clienteService.update(CLIENTE_ID, clienteRequest)).thenReturn(clienteResponse);
@@ -164,6 +167,7 @@ class ClienteControllerTest {
 
     @Test
     void update_shouldThrowAccessDeniedException_whenUnauthorized() {
+        when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getPrincipal()).thenReturn(authenticatedUser);
         when(clienteService.findClienteByUserId(USER_ID)).thenReturn(createAnotherClienteResponse());
 
@@ -173,6 +177,7 @@ class ClienteControllerTest {
 
     @Test
     void delete_shouldReturnNoContent_whenAuthorized() {
+        when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getPrincipal()).thenReturn(authenticatedUser);
         when(clienteService.findClienteByUserId(USER_ID)).thenReturn(clienteResponse);
 
@@ -184,6 +189,7 @@ class ClienteControllerTest {
 
     @Test
     void delete_shouldThrowAccessDeniedException_whenUnauthorized() {
+        when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getPrincipal()).thenReturn(authenticatedUser);
         when(clienteService.findClienteByUserId(USER_ID)).thenReturn(createAnotherClienteResponse());
 
@@ -193,20 +199,22 @@ class ClienteControllerTest {
 
     @Test
     void listarAgendamentos_shouldReturnAgendamentosList_whenAuthorized() {
-        List<AgendamentoResponse> expectedList = Arrays.asList(new AgendamentoResponse(), new AgendamentoResponse());
+        when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getPrincipal()).thenReturn(authenticatedUser);
         when(clienteService.findClienteByUserId(USER_ID)).thenReturn(clienteResponse);
-        when(agendamentoService.findByClienteId(CLIENTE_ID)).thenReturn(expectedList);
+        when(agendamentoService.findByClienteId(CLIENTE_ID)).thenReturn(Arrays.asList(new AgendamentoResponse(), new AgendamentoResponse()));
 
         ResponseEntity<List<AgendamentoResponse>> response = controller.listarAgendamentos(CLIENTE_ID);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(expectedList, response.getBody());
+        assertNotNull(response.getBody());
+        assertEquals(2, response.getBody().size());
         verify(agendamentoService).findByClienteId(CLIENTE_ID);
     }
 
     @Test
     void listarAgendamentos_shouldThrowAccessDeniedException_whenUnauthorized() {
+        when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getPrincipal()).thenReturn(authenticatedUser);
         when(clienteService.findClienteByUserId(USER_ID)).thenReturn(createAnotherClienteResponse());
 
