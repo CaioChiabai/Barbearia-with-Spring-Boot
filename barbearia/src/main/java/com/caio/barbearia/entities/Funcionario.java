@@ -16,16 +16,17 @@ import java.time.LocalDate;
 @EqualsAndHashCode
 public class Funcionario extends Pessoa{
 
-    @Column(nullable = false, length = 100)
+    @Column(length = 100)
     private String cargo;
 
-    @Column(nullable = false)
     private BigDecimal salario;
 
-    @Column(nullable = false)
     private LocalDate dataContratacao;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    public Funcionario(String nome, String cpf, User newUser) {
+        this.setNome(nome);
+        this.setCpf(cpf);
+        this.setUser(newUser);
+    }
+
 }

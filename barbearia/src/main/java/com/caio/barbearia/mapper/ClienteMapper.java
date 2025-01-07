@@ -3,6 +3,7 @@ package com.caio.barbearia.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.caio.barbearia.dto.RegisterDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,10 @@ public class ClienteMapper {
     private final ModelMapper mapper;
 
     public Cliente toCliente(ClienteRequest request){
+        return mapper.map(request, Cliente.class);
+    }
+
+    public Cliente registerToCliente(RegisterDTO request){
         return mapper.map(request, Cliente.class);
     }
 

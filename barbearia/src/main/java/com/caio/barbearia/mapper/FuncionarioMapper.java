@@ -3,6 +3,8 @@ package com.caio.barbearia.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.caio.barbearia.dto.RegisterDTO;
+import com.caio.barbearia.entities.Cliente;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +21,10 @@ public class FuncionarioMapper {
     private final ModelMapper mapper;
 
     public Funcionario toFuncionario(FuncionarioRequest request){
+        return mapper.map(request, Funcionario.class);
+    }
+
+    public Funcionario registerToFuncionario(RegisterDTO request){
         return mapper.map(request, Funcionario.class);
     }
 

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import com.caio.barbearia.dto.response.Pessoa.PessoaResponse;
+import com.caio.barbearia.dto.response.User.UserMinResponse;
 import com.caio.barbearia.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,7 +18,5 @@ import lombok.Setter;
 public class FuncionarioResponse extends PessoaResponse{
 
     private String cargo;
-    private BigDecimal salario;
-    private LocalDate dataContratacao;
-    private User user;
+    private UserMinResponse user;
 }

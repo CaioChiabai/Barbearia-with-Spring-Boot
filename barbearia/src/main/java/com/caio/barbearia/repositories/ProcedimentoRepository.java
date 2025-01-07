@@ -10,6 +10,4 @@ import com.caio.barbearia.entities.Procedimento;
 
 @Repository
 public interface ProcedimentoRepository extends JpaRepository<Procedimento,Long>{
-
-    List<ProcedimentoResponse> findAllProjectedBy();
 }

@@ -3,10 +3,17 @@ package com.caio.barbearia.controllers;
 import com.caio.barbearia.dto.AuthenticationDTO;
 import com.caio.barbearia.dto.LoginResponseDTO;
 import com.caio.barbearia.dto.RegisterDTO;
+import com.caio.barbearia.entities.Cliente;
+import com.caio.barbearia.entities.Funcionario;
 import com.caio.barbearia.entities.User;
+import com.caio.barbearia.enums.UserRole;
 import com.caio.barbearia.infra.security.TokenService;
+import com.caio.barbearia.repositories.ClienteRepository;
+import com.caio.barbearia.repositories.FuncionarioRepository;
 import com.caio.barbearia.repositories.UserRepository;
 
+import com.caio.barbearia.services.ClienteService;
+import com.caio.barbearia.services.FuncionarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -34,6 +41,12 @@ public class AuthenticationController {
     private UserRepository repository;
 
     @Autowired
+    private ClienteService clienteService;
+
+    @Autowired
+    private FuncionarioService funcionarioService;
+
+    @Autowired
     private TokenService tokenService;
 
     @PostMapping("/login")
@@ -43,7 +56,7 @@ public class AuthenticationController {
         @ApiResponse(responseCode = "400", description = "Invalid login credentials")
     })
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data){
-        var usarnamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
+        var usarnamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
         var auth = this.authenticationManager.authenticate(usarnamePassword);
 
         var token = tokenService.generateToken((User) auth.getPrincipal());
@@ -58,12 +71,21 @@ public class AuthenticationController {
         @ApiResponse(responseCode = "400", description = "User already exists")
     })
     public ResponseEntity register(@RequestBody @Valid RegisterDTO data){
-        if(this.repository.findByLogin(data.login()) != null){ return ResponseEntity.badRequest().build(); }
+        if(this.repository.findByEmail(data.email()) != null){ return ResponseEntity.badRequest().build(); }
 
+        //Cria o usuario
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-        User newUser = new User(data.login(), encryptedPassword, data.role());
-
+        User newUser = new User(data.email(), encryptedPassword, data.role());
         this.repository.save(newUser);
+
+        //Cria o cliente ou funcionario associado ao usuario
+        if(data.role() == UserRole.CLIENTE) {
+            clienteService.create(data);
+        }
+        if(data.role() == UserRole.FUNCIONARIO){
+            funcionarioService.create(data);
+        }
+
         return ResponseEntity.ok().build();
     }
 }

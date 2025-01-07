@@ -75,24 +75,6 @@ public class ClienteController {
         return ResponseEntity.ok(service.findById(id));
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Criar um novo cliente", 
-               description = "Cria um novo cliente com base nos dados fornecidos",
-               responses = {
-                   @ApiResponse(description = "Cliente criado com sucesso", responseCode = "201",
-                       content = @Content(schema = @Schema(implementation = ClienteResponse.class))),
-                   @ApiResponse(description = "Dados inválidos", responseCode = "400", content = @Content),
-                   @ApiResponse(description = "Erro interno do servidor", responseCode = "500", content = @Content)
-               })
-    public ResponseEntity<ClienteResponse> create(@RequestBody ClienteRequest clienteRequest) {
-        try {
-            ClienteResponse response = service.create(clienteRequest);
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-    }
-
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Atualizar cliente", 
                description = "Atualiza as informações de um cliente existente",

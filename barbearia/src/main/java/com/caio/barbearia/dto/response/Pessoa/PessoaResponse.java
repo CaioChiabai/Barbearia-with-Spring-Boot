@@ -13,7 +13,5 @@ public class PessoaResponse {
 
     private Long id;
     private String nome;
-    private String senha;
     private String cpf;
-    private String email;
 }

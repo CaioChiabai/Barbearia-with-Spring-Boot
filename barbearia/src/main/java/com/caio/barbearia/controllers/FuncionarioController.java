@@ -77,24 +77,6 @@ public class FuncionarioController {
         return ResponseEntity.ok(service.findById(id));
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Criar um novo funcionário", 
-               description = "Cria um novo funcionário com base nos dados fornecidos",
-               responses = {
-                   @ApiResponse(description = "Funcionário criado com sucesso", responseCode = "201",
-                       content = @Content(schema = @Schema(implementation = FuncionarioResponse.class))),
-                   @ApiResponse(description = "Dados inválidos", responseCode = "400", content = @Content),
-                   @ApiResponse(description = "Erro interno do servidor", responseCode = "500", content = @Content)
-               })
-    public ResponseEntity<FuncionarioResponse> create(@RequestBody FuncionarioRequest funcionarioRequest) {
-        try {
-            FuncionarioResponse response = service.create(funcionarioRequest);
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-    }
-
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Atualizar funcionário", 
                description = "Atualiza as informações de um funcionário existente",

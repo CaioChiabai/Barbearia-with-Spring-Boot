@@ -1,5 +1,6 @@
 package com.caio.barbearia.services;
 
+import com.caio.barbearia.dto.RegisterDTO;
 import com.caio.barbearia.dto.request.Funcionario.FuncionarioRequest;
 import com.caio.barbearia.dto.response.Funcionario.FuncionarioResponse;
 import com.caio.barbearia.entities.Funcionario;
@@ -41,10 +42,9 @@ public class FuncionarioService {
         return mapper.toFuncionarioResponse(entity);
     }
 
-    public FuncionarioResponse create(FuncionarioRequest request) {
-        Funcionario entity = mapper.toFuncionario(request);
-        Funcionario savedEntity = repository.save(entity);
-        return mapper.toFuncionarioResponse(savedEntity);
+    public void create(RegisterDTO request) {
+        Funcionario entity = mapper.registerToFuncionario(request);
+        repository.save(entity);
     }
 
     public FuncionarioResponse update(Long id, FuncionarioRequest request) {

@@ -23,12 +23,10 @@ public abstract class Pessoa implements Serializable {
     @Column(nullable = false, length = 100)
     private String nome;
 
-    @Column(nullable = false, length = 30)
-    private String senha;
-
     @Column(unique = true, nullable = false, length = 20)
     private String cpf;
 
-    @Column(unique = true, nullable = false, length = 100)
-    private String email;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

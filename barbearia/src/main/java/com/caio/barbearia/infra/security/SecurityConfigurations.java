@@ -72,6 +72,9 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.PUT, "/agendamento/**").hasAnyRole("ADMIN","CLIENTE")
                         .requestMatchers(HttpMethod.DELETE, "/agendamento/**").hasAnyRole("ADMIN","CLIENTE")
 
+                        // Restringir acesso a entidade USERS
+                        .requestMatchers(HttpMethod.GET, "/usuarios/**").hasRole("ADMIN")
+
                         //Liberando acesso ao swagger
                         .requestMatchers(
                                 "/swagger-ui/**",

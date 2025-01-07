@@ -1,5 +1,6 @@
 package com.caio.barbearia.services;
 
+import com.caio.barbearia.dto.RegisterDTO;
 import com.caio.barbearia.dto.request.Cliente.ClienteRequest;
 import com.caio.barbearia.dto.response.Cliente.ClienteResponse;
 import com.caio.barbearia.entities.Cliente;
@@ -41,10 +42,9 @@ public class ClienteService {
         return mapper.toClienteResponse(entity);
     }
 
-    public ClienteResponse create(ClienteRequest request) {
-        Cliente entity = mapper.toCliente(request);
-        Cliente savedEntity = repository.save(entity);
-        return mapper.toClienteResponse(savedEntity);
+    public void create(RegisterDTO request) {
+        Cliente entity = mapper.registerToCliente(request);
+        repository.save(entity);
     }
 
     public ClienteResponse update(Long id, ClienteRequest request) {

@@ -1,6 +1,7 @@
 package com.caio.barbearia.dto.response.Cliente;
 
 import com.caio.barbearia.dto.response.Pessoa.PessoaResponse;
+import com.caio.barbearia.dto.response.User.UserMinResponse;
 import com.caio.barbearia.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,5 +15,5 @@ import lombok.Setter;
 public class ClienteResponse extends PessoaResponse{
 
     private String telefone;
-    private User user;
+    private UserMinResponse user;
 }
