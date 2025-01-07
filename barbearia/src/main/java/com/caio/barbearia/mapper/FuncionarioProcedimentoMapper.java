@@ -3,10 +3,11 @@ package com.caio.barbearia.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.caio.barbearia.dto.request.FuncionarioProcedimento.FuncionarioProcedimentoRequest;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
-import com.caio.barbearia.dto.request.FuncionarioProcedimento.FuncionarioProcedimentoRequest;
+import com.caio.barbearia.dto.request.FuncionarioProcedimento.FuncionarioProcedimentoMinRequest;
 import com.caio.barbearia.dto.response.FuncionarioProcedimento.FuncionarioProcedimentoResponse;
 import com.caio.barbearia.entities.FuncionarioProcedimento;
 

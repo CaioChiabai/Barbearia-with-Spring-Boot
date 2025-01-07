@@ -20,14 +20,6 @@ public class ClienteMapper {
 
     private final ModelMapper mapper;
 
-    public Cliente toCliente(ClienteRequest request){
-        return mapper.map(request, Cliente.class);
-    }
-
-    public Cliente registerToCliente(RegisterDTO request){
-        return mapper.map(request, Cliente.class);
-    }
-
     public ClienteResponse toClienteResponse(Cliente  cliente){
         return mapper.map(cliente, ClienteResponse.class);
     }

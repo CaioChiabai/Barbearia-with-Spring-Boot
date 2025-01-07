@@ -2,6 +2,7 @@ package com.caio.barbearia.controllers;
 
 import java.util.List;
 
+import com.caio.barbearia.dto.request.Agendamento.AgendamentoMinRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -73,7 +74,7 @@ public class AgendamentoController {
                    @ApiResponse(description = "Dados inválidos", responseCode = "400", content = @Content),
                    @ApiResponse(description = "Erro interno do servidor", responseCode = "500", content = @Content)
                })
-    public ResponseEntity<AgendamentoResponse> create(@RequestBody AgendamentoRequest agendamentoRequest) {
+    public ResponseEntity<AgendamentoResponse> create(@RequestBody AgendamentoMinRequest agendamentoRequest) {
         try {
             AgendamentoResponse response = service.create(agendamentoRequest);
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -92,7 +93,7 @@ public class AgendamentoController {
                    @ApiResponse(description = "Agendamento não encontrado", responseCode = "404", content = @Content),
                    @ApiResponse(description = "Erro interno do servidor", responseCode = "500", content = @Content)
                })
-    public ResponseEntity<AgendamentoResponse> update(@PathVariable Long id, @RequestBody AgendamentoRequest agendamentoRequest) {
+    public ResponseEntity<AgendamentoResponse> update(@PathVariable Long id, @RequestBody AgendamentoMinRequest agendamentoRequest) {
         AgendamentoResponse response = service.update(id, agendamentoRequest);
         return ResponseEntity.ok(response);
     }

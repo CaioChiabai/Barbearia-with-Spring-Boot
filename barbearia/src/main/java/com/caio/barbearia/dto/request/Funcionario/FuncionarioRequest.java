@@ -20,5 +20,4 @@ public class FuncionarioRequest extends PessoaRequest{
     private String cargo;
     private BigDecimal salario;
     private LocalDate dataContratacao;
-    private UserMinRequest User;
 }

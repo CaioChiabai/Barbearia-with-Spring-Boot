@@ -1,6 +1,6 @@
 package com.caio.barbearia.controllers;
 
-import com.caio.barbearia.dto.request.FuncionarioProcedimento.FuncionarioProcedimentoRequest;
+import com.caio.barbearia.dto.request.FuncionarioProcedimento.FuncionarioProcedimentoMinRequest;
 import com.caio.barbearia.dto.response.Funcionario.FuncionarioResponse;
 import com.caio.barbearia.dto.response.FuncionarioProcedimento.FuncionarioProcedimentoResponse;
 import com.caio.barbearia.entities.User;
@@ -80,13 +80,13 @@ public class FuncionarioProcedimentoController {
                    @ApiResponse(description = "Dados inválidos", responseCode = "400", content = @Content),
                    @ApiResponse(description = "Erro interno do servidor", responseCode = "500", content = @Content)
                })
-    public ResponseEntity<FuncionarioProcedimentoResponse> create(@RequestBody FuncionarioProcedimentoRequest funcionarioProcedimentoRequest, @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<FuncionarioProcedimentoResponse> create(@RequestBody FuncionarioProcedimentoMinRequest funcionarioProcedimentoRequest, @AuthenticationPrincipal UserDetails userDetails) {
         
         // Obter o usuário autenticado
         User authenticatedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         // Verificar se o ID do usuário autenticado é o mesmo que o ID do usuário do funcionário no request ou se é um ADMIN
-        FuncionarioResponse funcionario = funcionarioService.findById(funcionarioProcedimentoRequest.getFuncionario().getId());
+        FuncionarioResponse funcionario = funcionarioService.findById(funcionarioProcedimentoRequest.getIdFuncionario());
         if (funcionario == null || (!authenticatedUser.getId().equals(funcionario.getUser()) && 
             !userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")))) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -107,13 +107,13 @@ public class FuncionarioProcedimentoController {
                    @ApiResponse(description = "Erro interno do servidor", responseCode = "500", content = @Content)
                })
     public ResponseEntity<FuncionarioProcedimentoResponse> update(@PathVariable(value = "id") Long id, 
-                                                                  @RequestBody FuncionarioProcedimentoRequest funcionarioProcedimentoRequest,
+                                                                  @RequestBody FuncionarioProcedimentoMinRequest funcionarioProcedimentoRequest,
                                                                   @AuthenticationPrincipal UserDetails userDetails) {
         // Obter o usuário autenticado
         User authenticatedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         // Verificar se o ID do usuário autenticado é o mesmo que o ID do usuário do funcionário no request ou se é um ADMIN
-        FuncionarioResponse funcionario = funcionarioService.findById(funcionarioProcedimentoRequest.getFuncionario().getId());
+        FuncionarioResponse funcionario = funcionarioService.findById(funcionarioProcedimentoRequest.getIdFuncionario());
         if (funcionario == null || (!authenticatedUser.getId().equals(funcionario.getUser()) && 
             !userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")))) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();

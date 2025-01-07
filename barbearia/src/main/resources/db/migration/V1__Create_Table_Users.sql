@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS `users` (
   `id` varchar(255) NOT NULL,
-  `login` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `role` tinyint DEFAULT NULL,
   PRIMARY KEY (`id`),

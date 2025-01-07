@@ -4,6 +4,7 @@ import com.caio.barbearia.dto.RegisterDTO;
 import com.caio.barbearia.dto.request.Funcionario.FuncionarioRequest;
 import com.caio.barbearia.dto.response.Funcionario.FuncionarioResponse;
 import com.caio.barbearia.entities.Funcionario;
+import com.caio.barbearia.entities.User;
 import com.caio.barbearia.exceptions.ResourceNotFoundException;
 import com.caio.barbearia.mapper.FuncionarioMapper;
 import com.caio.barbearia.repositories.FuncionarioRepository;
@@ -42,8 +43,8 @@ public class FuncionarioService {
         return mapper.toFuncionarioResponse(entity);
     }
 
-    public void create(RegisterDTO request) {
-        Funcionario entity = mapper.registerToFuncionario(request);
+    public void create(RegisterDTO request, User user) {
+        Funcionario entity = new Funcionario(request.nome(), request.cpf(), user);
         repository.save(entity);
     }
 

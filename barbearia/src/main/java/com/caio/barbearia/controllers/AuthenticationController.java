@@ -80,10 +80,10 @@ public class AuthenticationController {
 
         //Cria o cliente ou funcionario associado ao usuario
         if(data.role() == UserRole.CLIENTE) {
-            clienteService.create(data);
+            clienteService.create(data, newUser);
         }
         if(data.role() == UserRole.FUNCIONARIO){
-            funcionarioService.create(data);
+            funcionarioService.create(data, newUser);
         }
 
         return ResponseEntity.ok().build();

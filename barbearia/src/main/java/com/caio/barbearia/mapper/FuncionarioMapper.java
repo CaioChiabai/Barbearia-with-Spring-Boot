@@ -20,14 +20,6 @@ public class FuncionarioMapper {
 
     private final ModelMapper mapper;
 
-    public Funcionario toFuncionario(FuncionarioRequest request){
-        return mapper.map(request, Funcionario.class);
-    }
-
-    public Funcionario registerToFuncionario(RegisterDTO request){
-        return mapper.map(request, Funcionario.class);
-    }
-
     public FuncionarioResponse toFuncionarioResponse(Funcionario  funcionario){
         return mapper.map(funcionario, FuncionarioResponse.class);
     }

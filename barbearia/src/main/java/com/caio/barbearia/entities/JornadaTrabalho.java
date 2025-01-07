@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalTime;
+import java.util.Optional;
 
 @Entity
 @Getter
@@ -34,4 +35,12 @@ public class JornadaTrabalho {
 
     @Column(nullable = false)
     private LocalTime fimIntervalo;
+
+        public JornadaTrabalho(Optional<Funcionario> entityFuncionario, LocalTime inicioJornada, LocalTime fimJornada, LocalTime inicioIntervalo, LocalTime fimIntervalo) {
+            this.funcionario = entityFuncionario.orElse(null);
+            this.inicioJornada = inicioJornada;
+            this.fimJornada = fimJornada;
+            this.inicioIntervalo = inicioIntervalo;
+            this.fimIntervalo = fimIntervalo;
+    }
 }

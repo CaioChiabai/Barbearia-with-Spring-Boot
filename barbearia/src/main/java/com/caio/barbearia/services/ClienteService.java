@@ -4,6 +4,7 @@ import com.caio.barbearia.dto.RegisterDTO;
 import com.caio.barbearia.dto.request.Cliente.ClienteRequest;
 import com.caio.barbearia.dto.response.Cliente.ClienteResponse;
 import com.caio.barbearia.entities.Cliente;
+import com.caio.barbearia.entities.User;
 import com.caio.barbearia.exceptions.ResourceNotFoundException;
 import com.caio.barbearia.mapper.ClienteMapper;
 import com.caio.barbearia.repositories.ClienteRepository;
@@ -42,8 +43,8 @@ public class ClienteService {
         return mapper.toClienteResponse(entity);
     }
 
-    public void create(RegisterDTO request) {
-        Cliente entity = mapper.registerToCliente(request);
+    public void create(RegisterDTO request, User user) {
+        Cliente entity = new Cliente(request.nome(), request.cpf(), user);
         repository.save(entity);
     }
 

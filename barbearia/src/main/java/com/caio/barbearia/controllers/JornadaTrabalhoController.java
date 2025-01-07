@@ -2,6 +2,7 @@ package com.caio.barbearia.controllers;
 
 import java.util.List;
 
+import com.caio.barbearia.dto.request.JornadaTrabalho.JornadaTrabalhoMinRequest;
 import com.caio.barbearia.dto.request.JornadaTrabalho.JornadaTrabalhoRequest;
 import com.caio.barbearia.dto.response.JornadaTrabalho.JornadaTrabalhoResponse;
 import com.caio.barbearia.services.JornadaTrabalhoService;
@@ -66,7 +67,7 @@ public class JornadaTrabalhoController {
                    @ApiResponse(description = "Dados inválidos", responseCode = "400", content = @Content),
                    @ApiResponse(description = "Erro interno do servidor", responseCode = "500", content = @Content)
                })
-    public ResponseEntity<JornadaTrabalhoResponse> create(@RequestBody JornadaTrabalhoRequest request) {
+    public ResponseEntity<JornadaTrabalhoResponse> create(@RequestBody JornadaTrabalhoMinRequest request) {
         JornadaTrabalhoResponse response = service.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -82,7 +83,7 @@ public class JornadaTrabalhoController {
                    @ApiResponse(description = "Erro interno do servidor", responseCode = "500", content = @Content)
                })
     public ResponseEntity<JornadaTrabalhoResponse> update(@PathVariable(value = "id") Long id, 
-                                                          @RequestBody JornadaTrabalhoRequest request) {
+                                                          @RequestBody JornadaTrabalhoMinRequest request) {
         JornadaTrabalhoResponse response = service.update(id, request);
         return ResponseEntity.ok(response);
     }

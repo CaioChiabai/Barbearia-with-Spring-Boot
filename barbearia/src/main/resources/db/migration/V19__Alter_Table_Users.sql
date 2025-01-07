@@ -1,2 +1,0 @@
-ALTER TABLE users
-CHANGE COLUMN login email VARCHAR(255)

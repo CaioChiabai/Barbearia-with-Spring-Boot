@@ -2,6 +2,7 @@ package com.caio.barbearia.dto.request.Agendamento;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Optional;
 
 import com.caio.barbearia.entities.Cliente;
 import com.caio.barbearia.entities.FuncionarioProcedimento;
@@ -23,4 +24,12 @@ public class AgendamentoRequest {
     private LocalDate data;
     private FuncionarioProcedimento funcionarioProcedimento;
     private Status status;
+
+    public AgendamentoRequest(Optional<Cliente> entityCliente, Optional<FuncionarioProcedimento> entityFuncionarioProcedimento, LocalDate data, LocalTime horaInicio, Status status) {
+        this.cliente = entityCliente.orElse(null);
+        this.funcionarioProcedimento = entityFuncionarioProcedimento.orElse(null);
+        this.horaInicio = horaInicio;
+        this.data = data;
+        this.status = status;
+    }
 }
