@@ -8,6 +8,8 @@ import com.caio.barbearia.entities.Cliente;
 import com.caio.barbearia.entities.FuncionarioProcedimento;
 import com.caio.barbearia.enums.Status;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +22,11 @@ import lombok.Setter;
 public class AgendamentoRequest {
 
     private Cliente cliente;
+
+    @JsonFormat(pattern = "HH:mm:ss")
+    @Schema(type = "string", format = "time", example = "14:30:00")
     private LocalTime horaInicio;
+
     private LocalDate data;
     private FuncionarioProcedimento funcionarioProcedimento;
     private Status status;

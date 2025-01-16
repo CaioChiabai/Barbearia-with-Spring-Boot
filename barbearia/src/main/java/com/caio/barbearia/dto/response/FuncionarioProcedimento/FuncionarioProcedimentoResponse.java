@@ -1,6 +1,6 @@
 package com.caio.barbearia.dto.response.FuncionarioProcedimento;
 
-import com.caio.barbearia.dto.response.Funcionario.FuncionarioResponse;
+import com.caio.barbearia.dto.response.Funcionario.FuncionarioMinResponse;
 import com.caio.barbearia.entities.Procedimento;
 
 import lombok.AllArgsConstructor;
@@ -15,6 +15,6 @@ import lombok.Setter;
 public class FuncionarioProcedimentoResponse {
 
     private Long id;
-    private FuncionarioResponse funcionario;
+    private FuncionarioMinResponse funcionario;
     private Procedimento procedimento;
 }

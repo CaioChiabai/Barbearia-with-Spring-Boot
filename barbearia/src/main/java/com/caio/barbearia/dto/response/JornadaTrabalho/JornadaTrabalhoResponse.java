@@ -2,7 +2,7 @@ package com.caio.barbearia.dto.response.JornadaTrabalho;
 
 import java.time.LocalTime;
 
-import com.caio.barbearia.dto.response.Funcionario.FuncionarioResponse;
+import com.caio.barbearia.dto.response.Funcionario.FuncionarioMinResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +15,7 @@ import lombok.Setter;
 public class JornadaTrabalhoResponse {
     
     private Long id;
-    private FuncionarioResponse funcionario;
+    private FuncionarioMinResponse funcionario;
     private LocalTime inicioJornada;
     private LocalTime fimJornada;
     private LocalTime inicioIntervalo;
