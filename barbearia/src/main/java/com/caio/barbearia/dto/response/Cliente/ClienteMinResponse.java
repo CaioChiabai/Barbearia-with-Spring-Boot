@@ -13,4 +13,10 @@ import lombok.Setter;
 public class ClienteMinResponse extends PessoaMinResponse {
 
     private String telefone;
+
+    public ClienteMinResponse(long id, String nome, String telefone) {
+        this.setId(id);
+        this.setNome(nome);
+        this.setTelefone(telefone);
+    }
 }
