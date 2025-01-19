@@ -104,7 +104,7 @@ Entre as funcionalidades implementadas estão:
    Abra o navegador e vá até: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html).
 
 
-<h2>OverView dos endpoints</h2>
+<h2> 🌎 Overview dos endpoints</h2>
 
 ![image](https://github.com/user-attachments/assets/08e6a2e4-648d-40fd-9ebe-b7e15c81106d)
 ![image](https://github.com/user-attachments/assets/cd2560ac-893f-46d8-be23-c90aa110e591)
