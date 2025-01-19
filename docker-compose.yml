@@ -6,7 +6,7 @@ services:
     restart: always
     environment:
       TZ: 'America/Sao_Paulo'
-      MYSQL_ROOT_PASSWORD: "@Luiza2212"
+      MYSQL_ROOT_PASSWORD: "123456"
       MYSQL_USER: docker
       MYSQL_PASSWORD: docker
       MYSQL_DATABASE: barbearia
@@ -27,7 +27,7 @@ services:
       TZ: 'America/Sao_Paulo'
       SPRING.DATASOURCE.URL: jdbc:mysql://db:3308/barbearia?useTimezone=true?serverTimezone=UTC
       SPRING.DATASOURCE.USERNAME: root
-      SPRING.DATASOURCE.PASSWORD: "@Luiza2212"
+      SPRING.DATASOURCE.PASSWORD: "123456"
     ports:
       - 80:80
     command: mvn spring-boot:run
